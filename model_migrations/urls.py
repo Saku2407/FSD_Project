@@ -2,7 +2,7 @@ from django.urls import path
 
 from . import views
 
-app_name = "lab"
+app_name = "model_migrations"
 
 urlpatterns = [
     path("", views.introduction, name="introduction"),

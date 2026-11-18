@@ -109,7 +109,7 @@ def experiment(request, num, section):
         if finders.find(path):          # None if the file has not been added
             video_url = static(path)
 
-    return render(request, "lab/experiment.html", _ctx(
+    return render(request, "model_migrations/introduction.html", _ctx(
         request, sidebar,
         exp=exp,
         section=section,
@@ -125,7 +125,7 @@ def experiment(request, num, section):
 
 
 def home(request):
-    return render(request, "lab/simple.html", _ctx(
+    return render(request, "model_migrations/simple.html", _ctx(
         request, _main_sidebar(""), page_title="Home",
         body="Welcome to the virtual lab on Creating Django Models and "
              "Migrations. Use the menu on the left to begin, or jump "
@@ -133,14 +133,14 @@ def home(request):
 
 
 def partners(request):
-    return render(request, "lab/simple.html", _ctx(
+    return render(request, "model_migrations/simple.html", _ctx(
         request, _main_sidebar(""), page_title="Partners",
         body="This lab is part of a Virtual Labs style initiative "
              "supported by partner institutions."))
 
 
 def contact(request):
-    return render(request, "lab/simple.html", _ctx(
+    return render(request, "model_migrations/simple.html", _ctx(
         request, _main_sidebar(""), page_title="Contact",
         body="Phone: General Information: 011-26582050 | "
              "Email: support@vlabs.somaiya.edu"))

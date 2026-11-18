@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 
-app_name = "lab"
+app_name = "permission_groups"
 urlpatterns = [
     path("", views.introduction, name="introduction"),
     path("objective/", views.objective, name="objective"),

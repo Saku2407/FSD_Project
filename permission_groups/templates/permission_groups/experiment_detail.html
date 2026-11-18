@@ -1,6 +1,6 @@
 <!-- YE VALA HAI PROJECT -->
 
-{% extends "lab/base.html" %}
+{% extends "permission_groups/base.html" %}
 
 {% block title %}
     {{ experiment.title }} - {{ current_section|title }}
@@ -9,15 +9,15 @@
 
 {% block breadcrumb %}
 <div class="breadcrumb">
-    <a href="{% url 'lab:introduction' %}">
+    <a href="{% url 'permission_groups:introduction' %}">
         Computer Science and Engineering
     </a>
     ›
-    <a href="{% url 'lab:experiments' %}">
+    <a href="{% url 'permission_groups:experiments' %}">
         Permissions and Groups
     </a>
     ›
-    <a href="{% url 'lab:experiment_detail' experiment.slug %}">
+    <a href="{% url 'permission_groups:experiment_detail' experiment.slug %}">
         {{ experiment.title }}
     </a>
 </div>
@@ -32,7 +32,7 @@
     {% for section_id, label in section_links %}
 
     <li>
-        <a href="{% url 'lab:experiment_section' experiment.slug section_id %}"
+        <a href="{% url 'permission_groups:experiment_section' experiment.slug section_id %}"
            {% if current_section == section_id %}
                class="active"
                aria-current="page"
@@ -447,7 +447,7 @@ user.groups.add(group)
         Was this experiment useful?
 
         Share your comments through the
-        <a href="{% url 'lab:feedback' %}">
+        <a href="{% url 'permission_groups:feedback' %}">
             lab feedback page
         </a>.
     </p>
@@ -465,7 +465,7 @@ user.groups.add(group)
     {% if previous_section %}
 
         <a class="section-nav-button previous"
-           href="{% url 'lab:experiment_section' experiment.slug previous_section.0 %}">
+           href="{% url 'permission_groups:experiment_section' experiment.slug previous_section.0 %}">
 
             ← {{ previous_section.1 }}
 
@@ -482,7 +482,7 @@ user.groups.add(group)
     {% if next_section %}
 
         <a class="section-nav-button next"
-           href="{% url 'lab:experiment_section' experiment.slug next_section.0 %}">
+           href="{% url 'permission_groups:experiment_section' experiment.slug next_section.0 %}">
 
             {{ next_section.1 }} →
 
@@ -491,7 +491,7 @@ user.groups.add(group)
     {% else %}
 
         <a class="section-nav-button next"
-           href="{% url 'lab:experiments' %}">
+           href="{% url 'permission_groups:experiments' %}">
 
             Back to experiments →
 

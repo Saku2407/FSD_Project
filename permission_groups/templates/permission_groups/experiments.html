@@ -1,4 +1,4 @@
-{% extends "lab/base.html" %}
+{% extends "permission_groups/base.html" %}
 {% block title %}List of experiments{% endblock %}
 {% block content %}
 <h1 class="page-title">Permissions and Groups - Experiments</h1>
@@ -6,9 +6,9 @@
 <div class="experiment-cards">
 {% for e in experiments %}
   <article class="experiment-card"><div class="card-number">{{ forloop.counter }}</div><div class="card-body">
-    <h2><a href="{% url 'lab:experiment_detail' e.slug %}">{{ e.title }}</a></h2><p>{{ e.desc }}</p>
+    <h2><a href="{% url 'permission_groups:experiment_detail' e.slug %}">{{ e.title }}</a></h2><p>{{ e.desc }}</p>
     <div class="card-meta"><span>Estimated time: {{ e.time }}</span><span class="card-stars">★ ★ ★ ★ ☆</span></div>
-    <a class="start-link" href="{% url 'lab:experiment_detail' e.slug %}">Start Experiment →</a>
+    <a class="start-link" href="{% url 'permission_groups:experiment_detail' e.slug %}">Start Experiment →</a>
   </div></article>
 {% endfor %}
 </div>
