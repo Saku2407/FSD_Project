@@ -3,7 +3,7 @@ from django.http import Http404
 
 LAB_TITLE = "Permissions and Groups in Django"
 DEPARTMENT = "Computer Science and Engineering"
-SIDEBAR = [("lab:introduction", "Introduction"), ("lab:objective", "Objective"), ("lab:experiments", "List of experiments"), ("lab:audience", "Target Audience"), ("lab:alignment", "Course Alignment"), ("lab:feedback", "Feedback")]
+SIDEBAR = [("permission_groups:introduction", "Introduction"), ("permission_groups:objective", "Objective"), ("permission_groups:experiments", "List of experiments"), ("permission_groups:audience", "Target Audience"), ("permission_groups:alignment", "Course Alignment"), ("permission_groups:feedback", "Feedback")]
 
 EXPERIMENTS = [
  {"slug":"django-auth-system","title":"Understanding the Django Authentication System","desc":"Explore the User, Group and Permission models and understand how Django manages authentication and authorization.","time":"45 minutes"},
@@ -91,15 +91,15 @@ def _ctx(request, active, **extra):
     ctx.update(extra)
     return ctx
 
-def introduction(request): return render(request, "premission_groups/introduction.html", _ctx(request, "lab:introduction"))
-def objective(request): return render(request, "premission_groups/objective.html", _ctx(request, "lab:objective"))
-def experiments(request): return render(request, "premission_groups/experiments.html", _ctx(request, "lab:experiments", experiments=EXPERIMENTS))
+def introduction(request): return render(request, "permission_groups/introduction.html", _ctx(request, "permission_groups:introduction"))
+def objective(request): return render(request, "permission_groups/objective.html", _ctx(request, "permission_groups:objective"))
+def experiments(request): return render(request, "permission_groups/experiments.html", _ctx(request, "permission_groups:experiments", experiments=EXPERIMENTS))
 def experiment_detail(request, slug):
     """Open an experiment at its first section instead of showing all sections together."""
     experiment = next((item for item in EXPERIMENTS if item["slug"] == slug), None)
     if experiment is None:
         raise Http404("Experiment not found")
-    return redirect("lab:experiment_section", slug=slug, section="aim")
+    return redirect("permission_groups:experiment_section", slug=slug, section="aim")
 
 
 def experiment_section(request, slug, section):
@@ -124,15 +124,15 @@ def experiment_section(request, slug, section):
     section_index = next(i for i, (key, _label) in enumerate(SECTION_LINKS) if key == section)
     previous_section = SECTION_LINKS[section_index - 1] if section_index > 0 else None
     next_section = SECTION_LINKS[section_index + 1] if section_index < len(SECTION_LINKS) - 1 else None
-    return render(request, "premission_groups/experiment_detail.html", _ctx(
+    return render(request, "permission_groups/experiment_detail.html", _ctx(
         request, "", experiment=experiment, detail=detail,
         section_links=SECTION_LINKS, current_section=section,
         quiz_feedback=quiz_feedback, previous_section=previous_section,
         next_section=next_section,
     ))
-def audience(request): return render(request, "premission_groups/audience.html", _ctx(request, "lab:audience"))
-def alignment(request): return render(request, "premission_groups/alignment.html", _ctx(request, "lab:alignment"))
-def feedback(request): return render(request, "premission_groups/feedback.html", _ctx(request, "lab:feedback", submitted=request.method == "POST"))
-def home(request): return render(request, "premission_groups/simple.html", _ctx(request, "", page_title="Home", body="Welcome to the Django Permissions and Groups virtual lab. Use the menu on the left to begin."))
-def partners(request): return render(request, "premission_groups/simple.html", _ctx(request, "", page_title="Partners", body="This lab is part of a Virtual Labs style initiative supported by partner institutions."))
-def contact(request): return render(request, "premission_groups/simple.html", _ctx(request, "", page_title="Contact", body="Phone: General Information: 011-26582050 | Email: support@vlabs.ac.in"))
+def audience(request): return render(request, "permission_groups/audience.html", _ctx(request, "permission_groups:audience"))
+def alignment(request): return render(request, "permission_groups/alignment.html", _ctx(request, "permission_groups:alignment"))
+def feedback(request): return render(request, "permission_groups/feedback.html", _ctx(request, "permission_groups:feedback", submitted=request.method == "POST"))
+def home(request): return render(request, "permission_groups/simple.html", _ctx(request, "", page_title="Home", body="Welcome to the Django Permissions and Groups virtual lab. Use the menu on the left to begin."))
+def partners(request): return render(request, "permission_groups/simple.html", _ctx(request, "", page_title="Partners", body="This lab is part of a Virtual Labs style initiative supported by partner institutions."))
+def contact(request): return render(request, "permission_groups/simple.html", _ctx(request, "", page_title="Contact", body="Phone: General Information: 011-26582050 | Email: support@vlabs.ac.in"))

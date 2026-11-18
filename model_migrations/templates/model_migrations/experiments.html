@@ -8,8 +8,19 @@
     <li>
       <a class="exp-title" href="{% url 'model_migrations:experiment_root' e.num %}">{{ e.title }}</a>
       <span class="exp-desc">{{ e.desc }}</span>
-      <span class="exp-tags">Theory &middot; {% if e.video %}Animation &middot; {% endif %}Procedure &middot; Simulation &middot; Quiz</span>
-    </li>
+<span class="exp-tags">
+  <a href="{% url 'model_migrations:experiment' e.num 'theory' %}">Theory</a>
+  &middot;
+  {% if e.video %}
+    <a href="{% url 'model_migrations:experiment' e.num 'video' %}">Animation</a>
+    &middot;
+  {% endif %}
+  <a href="{% url 'model_migrations:experiment' e.num 'procedure' %}">Procedure</a>
+  &middot;
+  <a href="{% url 'model_migrations:experiment' e.num 'simulation' %}">Simulation</a>
+  &middot;
+  <a href="{% url 'model_migrations:experiment' e.num 'quiz' %}">Quiz</a>
+</span>    </li>
     {% endfor %}
   </ol>
 </div>
