@@ -1,0 +1,151 @@
+{% extends "form_validation/base.html" %}
+
+{% block title %}Theory{% endblock %}
+
+{% block content %}
+<h1 class="vl-page-title">Theory</h1>
+
+<div class="vl-card vl-card--accent">
+  <h2 class="vl-card__title">Step 1: Define the form</h2>
+  <p>Create a form class and declare its fields. Built-in validation already covers types and required fields.</p>
+<pre><code>from django import forms
+from django.core.exceptions import ValidationError
+
+
+class RegistrationForm(forms.Form):
+    username = forms.CharField()
+    email = forms.EmailField()
+    age = forms.IntegerField()
+    password = forms.CharField(widget=forms.PasswordInput)
+    confirm_password = forms.CharField(widget=forms.PasswordInput)</code></pre>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">Step 2: Field-level validation with <code>clean_&lt;fieldname&gt;()</code></h2>
+  <p>
+    Name the method <code>clean_</code> followed by the field name. Django calls it automatically.
+    Read the value from <code>self.cleaned_data</code>, raise <code>ValidationError</code> if it is bad,
+    and <strong>always return the value</strong>.
+  </p>
+<pre><code>def clean_username(self):
+    username = self.cleaned_data["username"].strip()
+
+    if len(username) &lt; 4:
+        raise ValidationError(
+            "Username must have at least 4 characters.",
+            code="username_too_short",
+        )
+
+    if not username.replace("_", "").isalnum():
+        raise ValidationError(
+            "Only letters, digits and underscores are allowed.",
+            code="username_invalid_chars",
+        )
+
+    return username
+
+
+def clean_age(self):
+    age = self.cleaned_data["age"]
+
+    if age &lt; 18:
+        raise ValidationError(
+            "You must be at least 18 years old to register.",
+            code="age_too_young",
+        )
+
+    return age</code></pre>
+  <div class="vl-note vl-note--warning">
+    <strong>Common mistake:</strong> forgetting <code>return username</code>. The field then becomes <code>None</code> in <code>cleaned_data</code>.
+  </div>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">Step 3: Cross-field validation with <code>clean()</code></h2>
+  <p>
+    <code>clean()</code> runs after every field-level method. Call <code>super().clean()</code> first, then
+    compare fields. Fields that already failed are missing from <code>cleaned_data</code>, so use
+    <code>.get()</code> instead of square brackets.
+  </p>
+<pre><code>def clean(self):
+    cleaned_data = super().clean()
+
+    password = cleaned_data.get("password")
+    confirm_password = cleaned_data.get("confirm_password")
+
+    if password and confirm_password and password != confirm_password:
+        # Attach the error to one specific field
+        self.add_error(
+            "confirm_password",
+            ValidationError("The two passwords do not match.", code="password_mismatch"),
+        )
+
+    return cleaned_data</code></pre>
+  <p>
+    To create a <strong>non-field error</strong> (shown at the top of the form), pass <code>None</code> as the field name:
+  </p>
+<pre><code>self.add_error(
+    None,
+    ValidationError("The password must not contain your username."),
+)</code></pre>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">Step 4: Use the form in a view</h2>
+<pre><code>def experiment(request):
+    if request.method == "POST":
+        form = RegistrationForm(request.POST)   # bind the data
+        if form.is_valid():                     # runs all validation
+            data = form.cleaned_data            # safe, cleaned values
+            success = True
+        else:
+            success = False                     # errors are in form.errors
+    else:
+        form = RegistrationForm()               # empty form for GET
+    ...</code></pre>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">Step 5: Show errors in the template</h2>
+{% verbatim %}
+<pre><code>&lt;form method="post"&gt;
+  {% csrf_token %}
+
+  {# Non-field errors (from add_error(None, ...)) #}
+  {{ form.non_field_errors }}
+
+  {% for field in form %}
+    &lt;label for="{{ field.id_for_label }}"&gt;{{ field.label }}&lt;/label&gt;
+    {{ field }}
+    {{ field.errors }}   {# errors for this field only #}
+  {% endfor %}
+
+  &lt;button type="submit"&gt;Register&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+{% endverbatim %}
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title"><code>clean_&lt;fieldname&gt;()</code> vs <code>clean()</code></h2>
+  <div class="table-wrap">
+    <table class="vl-table">
+      <thead>
+        <tr><th>Feature</th><th><code>clean_&lt;fieldname&gt;()</code></th><th><code>clean()</code></th></tr>
+      </thead>
+      <tbody>
+        <tr><td>How many</td><td>One per field</td><td>One per form</td></tr>
+        <tr><td>Runs</td><td>After built-in validation of that field</td><td>After all field-level methods</td></tr>
+        <tr><td>Data access</td><td><code>self.cleaned_data["field"]</code></td><td><code>cleaned_data.get("field")</code> for several fields</td></tr>
+        <tr><td>Must return</td><td>The cleaned value of the field</td><td>The <code>cleaned_data</code> dictionary</td></tr>
+        <tr><td>Error location</td><td>Automatically under that field</td><td>Chosen with <code>add_error()</code>, or at the top as a non-field error</td></tr>
+        <tr><td>Best for</td><td>Length, format, range, reserved values</td><td>Password match, date ranges, dependent fields</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-nav">
+  <a class="btn btn-outline" href="{% url 'form_validation:objective' %}">&larr; Objective</a>
+  <a class="btn" href="{% url 'form_validation:experiment' %}">Next: Experiment &rarr;</a>
+</div>
+{% endblock %}

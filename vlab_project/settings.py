@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "views_template",
     "register_inout",
     "git_repo_manage",
+    "form_validation",
 ]
 
 MIDDLEWARE = [

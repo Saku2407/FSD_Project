@@ -1,0 +1,125 @@
+{% extends "form_validation/base.html" %}
+
+{% block title %}Experiment{% endblock %}
+
+{% block content %}
+<h1 class="vl-page-title">Experiment</h1>
+
+<div class="vl-note">
+  Fill in the registration form below and press <strong>Register</strong>. The form is validated by the
+  <code>clean_username()</code>, <code>clean_age()</code> and <code>clean()</code> methods you studied in the Theory tab.
+</div>
+
+{% if success %}
+<div class="alert alert-success" role="status">
+  <strong>Success!</strong> All validation checks passed.
+  <ul class="mb-0">
+    <li>Username: <strong>{{ submitted_data.username }}</strong></li>
+    <li>Email: <strong>{{ submitted_data.email }}</strong></li>
+    <li>Age: <strong>{{ submitted_data.age }}</strong></li>
+    <li>Password: <em>accepted (never displayed)</em></li>
+  </ul>
+</div>
+{% endif %}
+
+{% if error %}
+<div class="alert alert-error" role="alert">
+  <strong>Validation failed.</strong>
+  {{ error_count }} problem{{ error_count|pluralize }} found. Fix the highlighted fields and submit again.
+</div>
+{% endif %}
+
+<div class="vl-card vl-card--accent">
+  <h2 class="vl-card__title">Registration form</h2>
+
+  <form method="post" action="{% url 'form_validation:experiment' %}" novalidate>
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="alert alert-error" role="alert">
+      <strong>Form-level error (from <code>clean()</code>):</strong>
+      {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    {% for field in form %}
+    <div class="form-group{% if field.errors %} has-error{% endif %}">
+      <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}
+      <span class="helptext">{{ field.help_text }}</span>
+      {% endif %}
+      {{ field.errors }}
+    </div>
+    {% endfor %}
+
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary">Register</button>
+      <a href="{% url 'form_validation:experiment' %}" class="btn btn-outline">Reset</a>
+    </div>
+  </form>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">Try these test cases</h2>
+  <div class="table-wrap">
+    <table class="vl-table">
+      <thead>
+        <tr><th>What to test</th><th>Enter</th><th>Which method fires</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Short username</td>
+          <td>Username <code>ab</code></td>
+          <td><code>clean_username()</code></td>
+        </tr>
+        <tr>
+          <td>Bad characters</td>
+          <td>Username <code>my name!</code></td>
+          <td><code>clean_username()</code></td>
+        </tr>
+        <tr>
+          <td>Reserved name</td>
+          <td>Username <code>admin</code></td>
+          <td><code>clean_username()</code></td>
+        </tr>
+        <tr>
+          <td>Under age</td>
+          <td>Age <code>16</code></td>
+          <td><code>clean_age()</code></td>
+        </tr>
+        <tr>
+          <td>Temporary email</td>
+          <td>Email <code>x@mailinator.com</code></td>
+          <td><code>clean_email()</code></td>
+        </tr>
+        <tr>
+          <td>Weak password</td>
+          <td>Password <code>abcdefgh</code> (no digit)</td>
+          <td><code>clean_password()</code></td>
+        </tr>
+        <tr>
+          <td>Passwords differ</td>
+          <td>Password <code>Pass1234</code>, confirm <code>Pass9999</code></td>
+          <td><code>clean()</code> (error under Confirm password)</td>
+        </tr>
+        <tr>
+          <td>Password contains username</td>
+          <td>Username <code>student01</code>, password <code>student01abc</code> in both boxes</td>
+          <td><code>clean()</code> (non-field error at the top)</td>
+        </tr>
+        <tr>
+          <td>Everything valid</td>
+          <td>Username <code>lab_student01</code>, age <code>21</code>, matching password <code>Pass1234</code></td>
+          <td>Success banner</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="page-nav">
+  <a class="btn btn-outline" href="{% url 'form_validation:theory' %}">&larr; Theory</a>
+  <a class="btn" href="{% url 'form_validation:assessment' %}">Next: Assessment &rarr;</a>
+</div>
+{% endblock %}

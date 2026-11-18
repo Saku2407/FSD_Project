@@ -1,0 +1,76 @@
+{% extends "form_validation/base.html" %}
+
+{% block title %}Introduction{% endblock %}
+
+{% block content %}
+<h1 class="vl-page-title">Introduction</h1>
+
+<div class="vl-card vl-card--accent">
+  <h2 class="vl-card__title">Why built-in validators are not enough</h2>
+  <p>
+    Django forms check the basics for you: a <code>CharField</code> can enforce
+    <code>max_length</code>, an <code>EmailField</code> checks the email format, and an
+    <code>IntegerField</code> rejects text. These built-in checks are useful, but real
+    applications need rules that Django cannot guess:
+  </p>
+  <ul>
+    <li>A username may only contain letters, digits and underscores, and must not be a reserved word such as <code>admin</code>.</li>
+    <li>A user must be <strong>18 or older</strong>, which is a business rule, not a data type.</li>
+    <li>The <strong>password</strong> and <strong>confirm password</strong> fields must match, so one field's validity depends on another.</li>
+    <li>A password must not contain the username.</li>
+  </ul>
+  <p>
+    The first three examples need your own logic. Django lets you add it by overriding methods on the form class.
+  </p>
+</div>
+
+<div class="vl-card">
+  <h2 class="vl-card__title">How <code>clean()</code> works</h2>
+  <p>
+    When you call <code>form.is_valid()</code>, Django runs validation in three layers, always in this order:
+  </p>
+  <ol class="step-list">
+    <li><strong>Built-in field validation.</strong> Each field converts and checks its own input (required, valid email, valid integer).</li>
+    <li><strong>Field-level hooks: <code>clean_&lt;fieldname&gt;()</code>.</strong> One method per field, used for rules about that single value.</li>
+    <li><strong>Form-level hook: <code>clean()</code>.</strong> Runs last, once all fields are processed. Use it for rules that compare several fields.</li>
+  </ol>
+
+  <div class="table-wrap">
+    <table class="vl-table">
+      <thead>
+        <tr><th>Method</th><th>Scope</th><th>Typical use</th><th>Error appears</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>clean_username()</code></td>
+          <td>One field</td>
+          <td>Length, allowed characters, reserved names</td>
+          <td>Under that field</td>
+        </tr>
+        <tr>
+          <td><code>clean_age()</code></td>
+          <td>One field</td>
+          <td>Minimum age of 18</td>
+          <td>Under that field</td>
+        </tr>
+        <tr>
+          <td><code>clean()</code></td>
+          <td>Whole form</td>
+          <td>Password match, password vs username</td>
+          <td>Under a chosen field, or at the top of the form</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vl-note vl-note--success">
+    <strong>Key idea:</strong> if a rule involves one field, use <code>clean_&lt;fieldname&gt;()</code>.
+    If it involves two or more fields, use <code>clean()</code>.
+  </div>
+</div>
+
+<div class="page-nav">
+  <span></span>
+  <a class="btn" href="{% url 'form_validation:objective' %}">Next: Objective &rarr;</a>
+</div>
+{% endblock %}

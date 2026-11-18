@@ -1,0 +1,61 @@
+{% extends "form_validation/base.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block content %}
+<h1 class="vl-page-title">Feedback</h1>
+
+{% if success %}
+<div class="alert alert-success" role="status">
+  <strong>Thank you!</strong> Your feedback has been received.
+</div>
+{% endif %}
+
+{% if error %}
+<div class="alert alert-error" role="alert">
+  <strong>Please correct the problems below and submit again.</strong>
+</div>
+{% endif %}
+
+<div class="vl-card vl-card--accent">
+  <h2 class="vl-card__title">Tell us about your experience</h2>
+
+  <form method="post" action="{% url 'form_validation:feedback' %}" novalidate>
+    {% csrf_token %}
+
+    <div class="form-group{% if errors.name %} has-error{% endif %}">
+      <label for="fb-name">Your name</label>
+      <input type="text" id="fb-name" name="name" class="form-control" value="{{ values.name }}" placeholder="e.g. Megha">
+      {% if errors.name %}<ul class="errorlist"><li>{{ errors.name }}</li></ul>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label>Rate this lab (1 = poor, 5 = excellent)</label>
+      {% for r in ratings %}
+      <label class="quiz-option">
+        <input type="radio" name="rating" value="{{ r }}"{% if values.rating == r %} checked{% endif %}>
+        {{ r }}
+      </label>
+      {% endfor %}
+      {% if errors.rating %}<ul class="errorlist"><li>{{ errors.rating }}</li></ul>{% endif %}
+    </div>
+
+    <div class="form-group{% if errors.comments %} has-error{% endif %}">
+      <label for="fb-comments">Comments</label>
+      <textarea id="fb-comments" name="comments" class="form-control" placeholder="What was clear? What could be improved?">{{ values.comments }}</textarea>
+      <span class="helptext">At least 10 characters.</span>
+      {% if errors.comments %}<ul class="errorlist"><li>{{ errors.comments }}</li></ul>{% endif %}
+    </div>
+
+    <div class="btn-group">
+      <button type="submit" class="btn btn-primary">Submit feedback</button>
+      <a href="{% url 'form_validation:feedback' %}" class="btn btn-outline">Clear</a>
+    </div>
+  </form>
+</div>
+
+<div class="page-nav">
+  <a class="btn btn-outline" href="{% url 'form_validation:assessment' %}">&larr; Assessment</a>
+  <a class="btn" href="{% url 'form_validation:introduction' %}">Back to Introduction</a>
+</div>
+{% endblock %}

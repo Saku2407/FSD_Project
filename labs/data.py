@@ -101,5 +101,6 @@ LABS = [
             "clean_<field>() and clean()",
             "Displaying form errors",
         ],
+        "launch_url": "/formValid/",
     },
 ]

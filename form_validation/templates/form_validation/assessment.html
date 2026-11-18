@@ -1,0 +1,62 @@
+{% extends "form_validation/base.html" %}
+
+{% block title %}Assessment{% endblock %}
+
+{% block content %}
+<h1 class="vl-page-title">Assessment</h1>
+
+{% if submitted %}
+<div class="alert {% if passed %}alert-success{% else %}alert-warning{% endif %}" role="status">
+  <strong>Your score:</strong>
+  <span class="score-badge">{{ score }} / {{ total }}</span>
+  ({{ percentage }}%).
+  {% if passed %}
+    Well done! You have understood the concepts.
+  {% else %}
+    Review the Theory tab and try again.
+  {% endif %}
+</div>
+{% else %}
+<div class="vl-note">Choose one answer for each question, then press <strong>Submit answers</strong>.</div>
+{% endif %}
+
+<form method="post" action="{% url 'form_validation:assessment' %}">
+  {% csrf_token %}
+
+  {% for q in questions %}
+  <div class="quiz-question">
+    <p class="quiz-question__text">Q{{ q.id }}. {{ q.text }}</p>
+
+    {% for opt in q.options %}
+    <label class="quiz-option{% if submitted and opt.is_correct %} correct{% elif submitted and opt.is_selected %} wrong{% endif %}">
+      <input type="radio" name="{{ q.field_name }}" value="{{ opt.key }}"{% if opt.is_selected %} checked{% endif %}>
+      {{ opt.text }}
+    </label>
+    {% endfor %}
+
+    {% if submitted %}
+      {% if not q.answered %}
+      <p class="error-text mb-0">You did not answer this question.</p>
+      {% elif q.is_correct %}
+      <p class="success-text mb-0">Correct.</p>
+      {% else %}
+      <p class="error-text mb-0">Incorrect.</p>
+      {% endif %}
+      <p class="text-muted mb-0"><strong>Explanation:</strong> {{ q.explanation }}</p>
+    {% endif %}
+  </div>
+  {% endfor %}
+
+  <div class="btn-group">
+    <button type="submit" class="btn btn-primary">Submit answers</button>
+    {% if submitted %}
+    <a href="{% url 'form_validation:assessment' %}" class="btn btn-outline">Retry quiz</a>
+    {% endif %}
+  </div>
+</form>
+
+<div class="page-nav">
+  <a class="btn btn-outline" href="{% url 'form_validation:experiment' %}">&larr; Experiment</a>
+  <a class="btn" href="{% url 'form_validation:feedback' %}">Next: Feedback &rarr;</a>
+</div>
+{% endblock %}

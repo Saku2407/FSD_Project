@@ -1,0 +1,108 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{{ lab_title }}{% endblock %} | Virtual Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'form_validation/css/vlabs_theme.css' %}">
+</head>
+<body>
+
+  <input type="checkbox" id="vl-toggle" class="vl-toggle">
+
+  <!-- Thin dark line at the very top -->
+  <div class="vl-topline"></div>
+
+  <!-- White header: hamburger | logo ........ stars | HOME PARTNERS CONTACT -->
+  <header class="vl-header">
+    <label for="vl-toggle" class="vl-burger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </label>
+
+    <a class="vl-logo" href="https://vlab.co.in" target="_blank" rel="noopener">
+      <img src="{% static 'images/vlabs-logo.jpeg' %}" alt="Virtual Labs logo"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block';">
+      <span class="vl-logo__fallback">Virtual Labs</span>
+    </a>
+
+    <div class="vl-header__right">
+      <span class="vl-stars" aria-label="Rated 4 out of 5">&#9733;&#9733;&#9733;&#9733;<span class="off">&#9734;</span></span>
+      <nav class="vl-topnav" aria-label="Site links">
+        <ul>
+          <li><a href="https://vlab.co.in" target="_blank" rel="noopener">HOME</a></li>
+          <li><a href="https://vlab.co.in/participating-institutes" target="_blank" rel="noopener">PARTNERS</a></li>
+          <li><a href="https://vlab.co.in/contact-us" target="_blank" rel="noopener">CONTACT</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Thick orange bar -->
+  <div class="vl-orangebar"></div>
+
+  <!-- Subject title -->
+  <div class="vl-subject">
+    <a href="{% url 'form_validation:introduction' %}">Web Development / Django Labs</a>
+  </div>
+
+  <!-- Sidebar + content -->
+  <div class="vl-layout">
+    <aside class="vl-sidebar">
+      <ul class="vl-nav">
+        {% for tab in tabs %}
+        <li{% if tab.is_active %} class="active"{% endif %}>
+          <a href="{{ tab.url }}" class="{% if tab.is_active %}active{% endif %}"{% if tab.is_active %} aria-current="page"{% endif %}>{{ tab.label }}</a>
+        </li>
+        {% endfor %}
+      </ul>
+    </aside>
+
+    <main class="vl-content">
+      <h2 class="vl-lab-title">{{ lab_title }}</h2>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+
+  <!-- Dark footer -->
+  <footer class="vl-foot">
+    <div class="vl-foot__cols">
+      <div class="vl-foot__col">
+        <h4>Community Links</h4>
+        <ul>
+          <li><a href="https://www.sakshat.ac.in/" target="_blank" rel="noopener">Sakshat Portal</a></li>
+          <li><a href="http://outreach.vlabs.ac.in/" target="_blank" rel="noopener">Outreach Portal</a></li>
+          <li><a href="https://vlab.co.in/faq" target="_blank" rel="noopener">FAQ: Virtual Labs</a></li>
+        </ul>
+      </div>
+
+      <div class="vl-foot__col">
+        <h4>Contact Us</h4>
+        <p>Phone: General Information: 011-26582050<br>
+           Email: <a href="mailto:support@vlabs.ac.in">support@vlabs.ac.in</a></p>
+      </div>
+
+      <div class="vl-foot__col">
+        <h4>Follow Us</h4>
+        <div class="vl-social">
+          <a class="vl-social__btn tw" href="https://twitter.com/TheVirtualLabs" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+          <a class="vl-social__btn fb" href="https://www.facebook.com/Virtual-Labs-IIT-Delhi-301510159983871/" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+          <a class="vl-social__btn yt" href="https://www.youtube.com/watch?v=asxRaOgk6a0" target="_blank" rel="noopener" aria-label="YouTube"><i class="fa fa-youtube"></i></a>
+          <a class="vl-social__btn li" href="https://in.linkedin.com/in/virtual-labs-008ba9136" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa fa-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="vl-foot__license">
+      <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" target="_blank" rel="noopener">AGPL 3.0</a>
+      &amp;
+      <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noopener">Creative Commons (CC BY-NC-SA 4.0)</a>
+      <div class="vl-foot__note">Academic project replica for coursework. Not an official Virtual Labs page. {% now "Y" %}</div>
+    </div>
+  </footer>
+
+</body>
+</html>
