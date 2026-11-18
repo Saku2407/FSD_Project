@@ -1,0 +1,25 @@
+{% extends "lab/base.html" %}
+{% block title %}Introduction{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ lab_title }}</h1>
+<div class="text">
+  <p>Welcome to the Permissions and Groups in Django Lab. Django ships with a
+  powerful, built-in authentication and authorization framework
+  (<code>django.contrib.auth</code>). Authentication answers the question
+  "who are you?", while authorization answers "what are you allowed to do?".
+  Permissions and Groups are the core tools Django provides for authorization.</p>
+
+  <p>A <strong>permission</strong> is a flag that allows a user to perform a
+  specific action on a specific model, such as adding, changing, deleting or
+  viewing a record. A <strong>group</strong> is a named collection of
+  permissions. Instead of assigning dozens of permissions to every user
+  individually, you create a group such as "Editors" or "Moderators", attach
+  permissions to it once, and then simply add users to the group.</p>
+
+  <p>Students often find it difficult to see how permissions are created,
+  stored and checked at different layers of a Django application: the database,
+  the admin site, views and templates. The interactive experiments in this lab
+  walk through each layer step by step, so that students can build secure,
+  role-based web applications with confidence.</p>
+</div>
+{% endblock %}

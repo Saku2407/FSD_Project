@@ -1,0 +1,14 @@
+{% extends "lab/base.html" %}
+{% block title %}Course Alignment{% endblock %}
+{% block content %}
+<h1 class="page-title">Course Alignment</h1>
+<div class="text">
+  <p>The experiments in this lab align with the following typical course topics:</p>
+  <ul class="bullets">
+    <li><strong>Web Technologies / Web Frameworks:</strong> user management, sessions and access control in Django.</li>
+    <li><strong>Information Security:</strong> the principle of least privilege and role-based access control (RBAC).</li>
+    <li><strong>Software Engineering:</strong> designing secure, maintainable applications.</li>
+    <li><strong>Database Management Systems:</strong> how permissions and groups are stored in relational tables (<code>auth_permission</code>, <code>auth_group</code>, <code>auth_user_groups</code>).</li>
+  </ul>
+</div>
+{% endblock %}

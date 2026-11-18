@@ -1,0 +1,17 @@
+{% extends "lab/base.html" %}
+{% block title %}Objective{% endblock %}
+{% block content %}
+<h1 class="page-title">Objective</h1>
+<div class="text">
+  <p>After completing this lab, the student will be able to:</p>
+  <ul class="bullets">
+    <li>Explain the difference between authentication and authorization in Django.</li>
+    <li>Describe the <code>User</code>, <code>Permission</code> and <code>Group</code> models and how they relate to each other.</li>
+    <li>Use the default <em>add</em>, <em>change</em>, <em>delete</em> and <em>view</em> permissions created for every model.</li>
+    <li>Define custom permissions in a model's <code>Meta</code> class.</li>
+    <li>Create groups and assign permissions and users to them from the admin site and the Django shell.</li>
+    <li>Restrict access to views using <code>@permission_required</code>, <code>PermissionRequiredMixin</code> and <code>user.has_perm()</code>.</li>
+    <li>Control what is displayed in templates using the <code>perms</code> variable.</li>
+  </ul>
+</div>
+{% endblock %}

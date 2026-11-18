@@ -1,0 +1,505 @@
+<!-- YE VALA HAI PROJECT -->
+
+{% extends "lab/base.html" %}
+
+{% block title %}
+    {{ experiment.title }} - {{ current_section|title }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+<div class="breadcrumb">
+    <a href="{% url 'lab:introduction' %}">
+        Computer Science and Engineering
+    </a>
+    ›
+    <a href="{% url 'lab:experiments' %}">
+        Permissions and Groups
+    </a>
+    ›
+    <a href="{% url 'lab:experiment_detail' experiment.slug %}">
+        {{ experiment.title }}
+    </a>
+</div>
+{% endblock %}
+
+
+<!-- LEFT SIDEBAR -->
+{% block sidebar %}
+
+<ul class="experiment-sidebar">
+
+    {% for section_id, label in section_links %}
+
+    <li>
+        <a href="{% url 'lab:experiment_section' experiment.slug section_id %}"
+           {% if current_section == section_id %}
+               class="active"
+               aria-current="page"
+           {% endif %}>
+
+            {{ label }}
+
+        </a>
+    </li>
+
+    {% endfor %}
+
+</ul>
+
+{% endblock %}
+
+
+
+<!-- MAIN CONTENT -->
+{% block content %}
+
+<h1 class="page-title experiment-heading">
+    {{ experiment.title }}
+</h1>
+
+<div class="section-page-label">
+    {{ current_section|title }}
+</div>
+
+
+
+<!-- 1. AIM -->
+{% if current_section == "aim" %}
+
+<section class="learning-section">
+
+    <h2>Aim</h2>
+
+    <p>{{ detail.aim }}</p>
+
+    <p>
+        <strong>Estimated Time:</strong>
+        {{ experiment.time }}
+    </p>
+
+</section>
+
+
+
+<!-- 2. OVERVIEW -->
+{% elif current_section == "overview" %}
+
+<section class="learning-section">
+
+    <h2>Overview</h2>
+
+    <p>{{ detail.overview }}</p>
+
+
+    <!-- YOUTUBE VIDEO SECTION -->
+    {% if detail.video_embed %}
+
+    <div class="video-resource">
+
+        <h3>Video Explanation</h3>
+
+        <div class="video-container">
+
+            <iframe
+                src="{{ detail.video_embed }}"
+                title="Django Permissions and Groups Tutorial"
+
+                allow="accelerometer;
+                       autoplay;
+                       clipboard-write;
+                       encrypted-media;
+                       gyroscope;
+                       picture-in-picture;
+                       web-share"
+
+                referrerpolicy="strict-origin-when-cross-origin"
+
+                allowfullscreen>
+            </iframe>
+
+        </div>
+
+
+        {% if detail.video %}
+
+        <p>
+            <a href="{{ detail.video }}"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                Watch on YouTube
+
+            </a>
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+
+
+<!-- 3. RECAP -->
+{% elif current_section == "recap" %}
+
+<section class="learning-section">
+
+    <h2>Recap</h2>
+
+    <ul>
+
+        {% for item in detail.recap %}
+
+        <li>{{ item }}</li>
+
+        {% endfor %}
+
+    </ul>
+
+</section>
+
+
+
+<!-- 4. PRETEST AND 8. POSTTEST -->
+{% elif current_section == "pretest" or current_section == "posttest" %}
+
+<section class="learning-section">
+
+    <h2>
+        {% if current_section == "pretest" %}
+            Pretest
+        {% else %}
+            Posttest
+        {% endif %}
+    </h2>
+
+
+    <p>
+        {% if current_section == "pretest" %}
+
+            Answer these questions to check your existing understanding.
+
+        {% else %}
+
+            Answer these questions to evaluate what you learned in this experiment.
+
+        {% endif %}
+    </p>
+
+
+    <form method="post" class="quiz-form">
+
+        {% csrf_token %}
+
+
+        <!-- PRETEST QUESTIONS -->
+        {% if current_section == "pretest" %}
+
+            {% for q in detail.pretest %}
+
+            <fieldset>
+
+                <legend>
+                    {{ forloop.counter }}. {{ q.0 }}
+                </legend>
+
+                {% for option in q.1 %}
+
+                <label class="quiz-option">
+
+                    <input
+                        type="radio"
+                        name="pretest_{{ forloop.parentloop.counter0 }}"
+                        value="{{ forloop.counter0 }}"
+                        required
+                    >
+
+                    {{ option }}
+
+                </label>
+
+                {% endfor %}
+
+            </fieldset>
+
+            {% endfor %}
+
+
+        <!-- POSTTEST QUESTIONS -->
+        {% else %}
+
+            {% for q in detail.posttest %}
+
+            <fieldset>
+
+                <legend>
+                    {{ forloop.counter }}. {{ q.0 }}
+                </legend>
+
+                {% for option in q.1 %}
+
+                <label class="quiz-option">
+
+                    <input
+                        type="radio"
+                        name="posttest_{{ forloop.parentloop.counter0 }}"
+                        value="{{ forloop.counter0 }}"
+                        required
+                    >
+
+                    {{ option }}
+
+                </label>
+
+                {% endfor %}
+
+            </fieldset>
+
+            {% endfor %}
+
+        {% endif %}
+
+
+        <button type="submit">
+
+            {% if current_section == "pretest" %}
+                Check Pretest
+            {% else %}
+                Submit Posttest
+            {% endif %}
+
+        </button>
+
+
+        <!-- QUIZ RESULT -->
+        {% if quiz_feedback %}
+
+        <p class="quiz-result">
+
+            Your score:
+            {{ quiz_feedback.score }}
+            /
+            {{ quiz_feedback.total }}
+
+        </p>
+
+        {% endif %}
+
+    </form>
+
+</section>
+
+
+
+<!-- 5. EXPERIMENT -->
+{% elif current_section == "steps" %}
+
+<section class="learning-section">
+
+    <h2>Experiment</h2>
+
+    <p>
+        Follow the steps below and perform the activity
+        in your Django project.
+    </p>
+
+
+    {% for step in detail.steps %}
+
+    <div class="step-card">
+
+        <h3>
+            Step {{ forloop.counter }}: {{ step.0 }}
+        </h3>
+
+        <p>{{ step.1 }}</p>
+
+    </div>
+
+    {% endfor %}
+
+</section>
+
+
+
+<!-- 6. CODE ASSESSMENT -->
+{% elif current_section == "code" %}
+
+<section class="learning-section">
+
+    <h2>Code Assessment</h2>
+
+    <p>
+        Use the following code ideas as a starting point.
+        Replace the app label and permission codename
+        with the values in your own project.
+    </p>
+
+
+    <pre><code># Check a user's permission in a view
+
+if request.user.has_perm("app_label.view_record"):
+
+    # Allow the protected operation
+    pass
+
+
+# Add a user to a group
+
+user.groups.add(group)
+</code></pre>
+
+
+    <p>
+
+        <strong>Task:</strong>
+
+        Implement the activity, run the server and verify
+        the expected behaviour with at least two users
+        having different roles.
+
+    </p>
+
+</section>
+
+
+
+<!-- 7. ANALYSIS -->
+{% elif current_section == "analysis" %}
+
+<section class="learning-section">
+
+    <h2>Analysis</h2>
+
+    <p>{{ detail.analysis }}</p>
+
+    <p>
+        Record your observations:
+
+        Which user could perform the action,
+        which permission allowed it, and what happened
+        when the permission was removed.
+    </p>
+
+</section>
+
+
+
+<!-- 9. FURTHER READINGS -->
+{% elif current_section == "references" %}
+
+<section class="learning-section">
+
+    <h2>Further Readings/References</h2>
+
+    <ul>
+
+        <li>
+            <a href="https://docs.djangoproject.com/en/stable/topics/auth/"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                Django Documentation: Authentication
+
+            </a>
+        </li>
+
+
+        <li>
+            <a href="https://docs.djangoproject.com/en/stable/topics/auth/default/"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                Django Documentation: Using the Authentication System
+
+            </a>
+        </li>
+
+
+        <li>
+            <a href="https://docs.djangoproject.com/en/stable/ref/contrib/auth/"
+               target="_blank"
+               rel="noopener noreferrer">
+
+                Django Documentation: django.contrib.auth
+
+            </a>
+        </li>
+
+    </ul>
+
+</section>
+
+
+
+<!-- 10. FEEDBACK -->
+{% elif current_section == "feedback" %}
+
+<section class="learning-section">
+
+    <h2>Feedback</h2>
+
+    <p>
+        Was this experiment useful?
+
+        Share your comments through the
+        <a href="{% url 'lab:feedback' %}">
+            lab feedback page
+        </a>.
+    </p>
+
+</section>
+
+{% endif %}
+
+
+
+<!-- PREVIOUS AND NEXT NAVIGATION -->
+<nav class="section-navigation" aria-label="Experiment section navigation">
+
+
+    {% if previous_section %}
+
+        <a class="section-nav-button previous"
+           href="{% url 'lab:experiment_section' experiment.slug previous_section.0 %}">
+
+            ← {{ previous_section.1 }}
+
+        </a>
+
+    {% else %}
+
+        <span></span>
+
+    {% endif %}
+
+
+
+    {% if next_section %}
+
+        <a class="section-nav-button next"
+           href="{% url 'lab:experiment_section' experiment.slug next_section.0 %}">
+
+            {{ next_section.1 }} →
+
+        </a>
+
+    {% else %}
+
+        <a class="section-nav-button next"
+           href="{% url 'lab:experiments' %}">
+
+            Back to experiments →
+
+        </a>
+
+    {% endif %}
+
+
+</nav>
+
+{% endblock %}

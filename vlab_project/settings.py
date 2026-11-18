@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "labs",
+    "permission_groups",
 ]
 
 MIDDLEWARE = [

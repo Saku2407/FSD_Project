@@ -1,0 +1,15 @@
+{% extends "lab/base.html" %}
+{% block title %}List of experiments{% endblock %}
+{% block content %}
+<h1 class="page-title">Permissions and Groups - Experiments</h1>
+<div class="text experiment-list-intro"><p>Select an experiment to open its learning page. Each experiment contains an aim, overview, recap, pre-test, guided activity, analysis and post-test.</p></div>
+<div class="experiment-cards">
+{% for e in experiments %}
+  <article class="experiment-card"><div class="card-number">{{ forloop.counter }}</div><div class="card-body">
+    <h2><a href="{% url 'lab:experiment_detail' e.slug %}">{{ e.title }}</a></h2><p>{{ e.desc }}</p>
+    <div class="card-meta"><span>Estimated time: {{ e.time }}</span><span class="card-stars">★ ★ ★ ★ ☆</span></div>
+    <a class="start-link" href="{% url 'lab:experiment_detail' e.slug %}">Start Experiment →</a>
+  </div></article>
+{% endfor %}
+</div>
+{% endblock %}
