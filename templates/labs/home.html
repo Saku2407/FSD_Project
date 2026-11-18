@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p class="breadcrumb"><a href="{% url 'labs:home' %}">Home</a> &raquo; Broad Areas of Virtual Labs</p>
+
+<div class="layout">
+  <section class="lab-list" aria-label="Labs">
+    {% for lab in labs %}
+    <article class="lab-card" data-title="{{ lab.title|lower }}">
+      <div class="lab-main">
+        <h3><a href="{% url 'labs:lab_detail' lab.slug %}">{{ lab.title }}</a></h3>
+        <div class="lab-actions">
+          <button class="toggle" type="button" aria-expanded="false" aria-controls="books-{{ forloop.counter }}">Reference Books</button>
+          <button class="toggle" type="button" aria-expanded="false" aria-controls="syllabus-{{ forloop.counter }}">Syllabus Mapping</button>
+        </div>
+        <ul class="panel" id="books-{{ forloop.counter }}" hidden>
+          {% for book in lab.books %}<li>{{ book }}</li>{% endfor %}
+        </ul>
+        <ul class="panel" id="syllabus-{{ forloop.counter }}" hidden>
+          {% for item in lab.syllabus %}<li>{{ item }}</li>{% endfor %}
+        </ul>
+      </div>
+      <a class="lab-institute" href="{% url 'labs:lab_detail' lab.slug %}">{{ lab.institute }}</a>
+    </article>
+    {% endfor %}
+    <p id="no-results" class="no-results" hidden>No lab matches your search. Try a different word.</p>
+  </section>
+
+  <aside class="announcements">
+    <h3>Announcements</h3>
+    <div class="announce-body" tabindex="0">
+      <p>* Six new Django labs are available. Start with Git Repository Management.</p>
+      <p>* Use the Lab Feedback Form to tell us what to improve.</p>
+      <p>* Run <code>python manage.py runserver</code> to view this site locally.</p>
+      <p>* Add more labs by editing <code>labs/data.py</code>.</p>
+    </div>
+  </aside>
+</div>
+{% endblock %}

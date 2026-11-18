@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Django Virtual Labs{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span id="clock" aria-live="off"></span>
+      <span>Visitors &nbsp;{{ visitors|default:"0" }}</span>
+    </div>
+  </div>
+
+  <header class="brandbar">
+    <div class="container brandbar-inner">
+      <a class="logo" href="{% url 'labs:home' %}" aria-label="Django Virtual Labs home">
+        <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true">
+          <path d="M24 6h16v4h-3v14l15 26a5 5 0 0 1-4.3 7.5H16.3A5 5 0 0 1 12 50l15-26V10h-3z" fill="none" stroke="#1d9a6c" stroke-width="4" stroke-linejoin="round"/>
+          <circle cx="28" cy="42" r="4" fill="#1d9a6c"/><circle cx="38" cy="36" r="3" fill="#1d9a6c"/>
+        </svg>
+        <span class="logo-text">
+          <strong>Django</strong>
+          <span>Virtual Labs</span>
+        </span>
+      </a>
+      <div class="tagline">
+        <p>An Initiative of</p>
+        <h1>Somaiya Mumbai</h1>
+        <p class="tagline-sub">Learning web development with Django through <span class="accent">hands-on labs</span></p>
+      </div>
+      <form class="search" role="search" onsubmit="return false">
+        <input type="search" id="lab-search" placeholder="Search Lab" aria-label="Search Lab" autocomplete="off">
+        <button type="submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><circle cx="10" cy="10" r="6" fill="none" stroke="#222" stroke-width="2.5"/><path d="M15 15l6 6" stroke="#222" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+    </div>
+  </header>
+
+  <nav class="mainnav" aria-label="Main">
+    <div class="container">
+      <ul>
+        <li><a href="{% url 'labs:home' %}" {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}>Home</a></li>
+        <li><a href="{% url 'labs:about' %}" {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}>About Us</a></li>
+        <li><a href="{% url 'labs:contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="banner">
+    <div class="container"><h2>{% block banner %}Django Web Development{% endblock %}</h2></div>
+  </section>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#">Lab Feedback Form</a></li>
+          <li><a href="#">Lab Assessment Form</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-divider-right">
+        <h3>About Django Labs</h3>
+        <ul>
+          <li><a href="{% url 'labs:home' %}">Home</a></li>
+          <li><a href="{% url 'labs:about' %}">About us</a></li>
+          <li><a href="{% url 'labs:contact' %}">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3><u>Get In Touch With Us</u></h3>
+        <p>support@example.com</p>
+        <p>Department of Computer Engineering<br>Somaiya, Mumbai</p>
+      </div>
+    </div>
+  </footer>
+
+  <button id="to-top" aria-label="Back to top" hidden>
+    <svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M4 16l8-8 8 8" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

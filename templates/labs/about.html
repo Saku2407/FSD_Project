@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}About Us | Django Virtual Labs{% endblock %}
+{% block content %}
+<p class="breadcrumb"><a href="{% url 'labs:home' %}">Home</a> &raquo; About Us</p>
+<article class="detail">
+  <h2>About Django Virtual Labs</h2>
+  <p>Django Virtual Labs is a set of practice labs for learning web development with Django, from version control to form validation.</p>
+</article>
+{% endblock %}
