@@ -1,0 +1,113 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}{{ experiment.short_title }} — Django Virtual Lab{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ experiment.short_title }}</h1>
+
+{% if section == "aim" %}
+
+    <h3>Aim</h3>
+    <p>{{ experiment.aim }}</p>
+
+    <h3>Estimated Time</h3>
+    <p>{{ experiment.time }}</p>
+
+    <h3>Learning Objectives of the Experiment</h3>
+    <p>By the end of this experiment, the student should be able to understand the concept, explain the Django mechanism involved, perform the practical activity, and verify the result.</p>
+
+{% elif section == "overview" %}
+
+    <h3>Overview</h3>
+    <p>{{ experiment.overview }}</p>
+
+    <h3>Prerequisites</h3>
+    <ul>
+        {% for item in experiment.prerequisites %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+{% elif section == "recap" %}
+
+    <h3>Recap</h3>
+    {% for concept, technical, simple in experiment.concepts %}
+        <div class="concept">
+            <h4>{{ concept }}</h4>
+            <p><strong>Technical explanation:</strong> {{ technical }}</p>
+            <p><strong>In simple words:</strong> {{ simple }}</p>
+        </div>
+    {% endfor %}
+
+{% elif section == "real" %}
+
+    <h3>Real Experiment</h3>
+
+    {% if slug == "registration" %}
+        <p>Perform the actual Django registration operation. The submitted data is validated by Django and a real user account is created in the database.</p>
+        <a class="button" href="{% url 'register_inout:register' %}">Start Registration</a>
+
+    {% elif slug == "login" %}
+        <p>Use an account created in Experiment 1. Test both valid and invalid credentials.</p>
+        <a class="button" href="{% url 'register_inout:login' %}">Start Login</a>
+
+    {% elif slug == "logout" %}
+        <p>Log in first. Then use the protected dashboard and perform the logout operation.</p>
+
+        {% if user.is_authenticated %}
+            <div class="success">
+                You are currently logged in as <strong>{{ user.username }}</strong>.
+            </div>
+
+            <form method="post" action="{% url 'register_inout:logout' %}">
+                {% csrf_token %}
+                <button class="button" type="submit">Logout</button>
+            </form>
+        {% else %}
+            <p>You are currently logged out.</p>
+            <a class="button" href="{% url 'register_inout:login' %}">Login first</a>
+        {% endif %}
+    {% endif %}
+
+    <h3>Video Tutorial</h3>
+    <div class="video-placeholder">
+        <p><strong>Your tutorial video goes here.</strong></p>
+        <p>Replace this box later with your own YouTube iframe or local MP4 video.</p>
+    </div>
+
+{% elif section == "analysis" %}
+
+    <h3>Analysis</h3>
+    <ol>
+        <li>The browser sends a request to a Django URL.</li>
+        <li>Django URLconf selects the corresponding view.</li>
+        <li>The view reads request data and invokes the appropriate form/authentication/database operation.</li>
+        <li>Django validates the input.</li>
+        <li>The view either displays errors, stores data, logs a user in/out, or redirects.</li>
+        <li>For authenticated requests, Django makes the current user available as <code>request.user</code>.</li>
+    </ol>
+
+    <div class="info-box">
+        <strong>Analysis question:</strong>
+        Why is hiding a dashboard link not enough to protect the dashboard?
+    </div>
+
+{% elif section == "references" %}
+
+    <h3>Further Readings/References</h3>
+    <ul class="references-list">
+        <li>Django documentation — Authentication</li>
+        <li>Django documentation — Forms</li>
+        <li>Django documentation — CSRF protection</li>
+        <li>Django documentation — Sessions</li>
+        <li>Python documentation — General language reference</li>
+    </ul>
+
+{% else %}
+
+    <p>Select a section from the experiment navigation.</p>
+
+{% endif %}
+
+{% endblock %}

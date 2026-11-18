@@ -1,0 +1,33 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<h2>Authenticated Dashboard</h2>
+
+<hr>
+
+<div class="success">
+
+    <strong>Login successful.</strong>
+
+    You are logged in as <strong>{{ request.user.username }}</strong>.
+
+</div>
+
+<p><strong>Username:</strong> {{ request.user.username }}</p>
+
+<p><strong>Email:</strong> {{ request.user.email }}</p>
+
+<p><strong>Authentication status:</strong> {{ request.user.is_authenticated }}</p>
+
+<form method="post" action="{% url 'register_inout:logout' %}">
+
+    {% csrf_token %}
+
+    <button class="button danger" type="submit">Logout</button>
+
+</form>
+
+{% endblock %}

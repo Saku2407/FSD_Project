@@ -1,0 +1,13 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}User Login — Django Virtual Lab{% endblock %}
+
+{% block content %}
+<h1 class="page-title">User Login</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="button" type="submit">Login</button>
+</form>
+{% endblock %}

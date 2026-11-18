@@ -1,0 +1,548 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #171717;
+    background: #ffffff;
+    line-height: 1.65;
+    font-size: 17px;
+}
+
+a {
+    color: #28618f;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff6600;
+}
+
+.vl-header {
+    min-height: 104px;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border-top: 1px solid #222;
+}
+
+.menu-box {
+    width: 88px;
+    height: 100px;
+    border-right: 1px solid #e5e5e5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+}
+
+.menu-box span {
+    display: block;
+    width: 28px;
+    height: 2px;
+    background: #777;
+}
+
+.vl-brand {
+    margin-left: 34px;
+}
+
+.vl-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-flask {
+    width: 56px;
+    height: 56px;
+    border: 3px solid #7bbd37;
+    border-radius: 16px 16px 22px 22px;
+    color: #2a91d0;
+    display: grid;
+    place-items: center;
+    font-size: 29px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    color: #2a8bc8;
+    font-size: 22px;
+    line-height: .9;
+}
+
+.logo-text strong:last-of-type {
+    color: #7bbd37;
+}
+
+.logo-text small {
+    color: #777;
+    font-size: 9px;
+    margin-top: 7px;
+}
+
+.vl-header-right {
+    margin-left: auto;
+    margin-right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 70px;
+}
+
+.rating {
+    font-size: 25px;
+    color: #ffc400;
+    letter-spacing: -3px;
+    white-space: nowrap;
+}
+
+.empty-star {
+    color: #ffc400;
+}
+
+.top-nav {
+    display: flex;
+    gap: 85px;
+}
+
+.top-nav a {
+    color: #2a8bc8;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.orange-bar {
+    height: 8px;
+    background: #ff6500;
+}
+
+.course-heading,
+.breadcrumb {
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 26px 28px 16px;
+    color: #287fc0;
+    font-size: 29px;
+}
+
+.breadcrumb {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+    font-size: 28px;
+}
+
+.breadcrumb a {
+    color: #287fc0;
+}
+
+.vl-layout {
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    max-width: 1680px;
+    margin: 0 auto;
+    min-height: 580px;
+}
+
+.vl-sidebar {
+    border-right: 1px solid #dedede;
+    padding: 0 24px 35px 28px;
+}
+
+.vl-sidebar > a,
+.side-group summary {
+    display: block;
+    padding: 7px 4px;
+    margin: 4px 0;
+    color: #2b5d89;
+    font-size: 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.vl-sidebar > a.active,
+.side-group summary.active {
+    color: #ff6500;
+}
+
+.side-group {
+    margin: 2px 0;
+}
+
+.side-group summary {
+    list-style: none;
+}
+
+.side-group summary::-webkit-details-marker {
+    display: none;
+}
+
+.side-group summary span {
+    float: right;
+    font-size: 18px;
+}
+
+.sub-link {
+    padding-left: 22px !important;
+    font-size: 17px !important;
+}
+
+.back-link {
+    border-top: 1px solid #ddd;
+    margin-top: 25px;
+    padding-top: 16px;
+}
+
+.back-link a {
+    color: #287fc0;
+    font-size: 17px;
+}
+
+.vl-content {
+    padding: 12px 52px 55px;
+    max-width: 1250px;
+}
+
+.vl-content h1,
+.vl-content h2 {
+    color: #2b94d1;
+    font-weight: 400;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 44px;
+    margin: 0 0 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #ddd;
+}
+
+.vl-content h3 {
+    font-size: 26px;
+    font-weight: 400;
+    text-decoration: underline;
+    margin-top: 30px;
+}
+
+.vl-content h4 {
+    font-size: 21px;
+}
+
+.vl-content hr {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin: 12px 0 30px;
+}
+
+.vl-content p,
+.vl-content li {
+    font-size: 17px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 22px;
+}
+
+.card {
+    border-top: 3px solid #2a91d0;
+    border-bottom: 1px solid #ddd;
+    padding: 18px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 14px;
+    background: #42ae50;
+    color: #fff;
+    font-size: 13px;
+}
+
+.button {
+    display: inline-block;
+    background: #2d8fd3;
+    color: #fff;
+    border: 0;
+    padding: 10px 19px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button:hover {
+    color: #fff;
+    background: #247bb7;
+}
+
+.info-box,
+.success,
+.score-box,
+.video-placeholder {
+    padding: 15px 18px;
+    margin: 22px 0;
+    border-left: 4px solid #2d8fd3;
+    background: #eef7fc;
+}
+
+.success {
+    border-left-color: #43a953;
+    background: #eff9f0;
+}
+
+.score-box {
+    font-size: 23px;
+}
+
+.concept {
+    padding: 10px 0 16px;
+    border-bottom: 1px solid #e2e2e2;
+}
+
+.difficulty {
+    display: flex;
+    gap: 28px;
+    padding: 12px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 25px;
+}
+
+.difficulty label {
+    font-size: 18px;
+}
+
+.quiz-form fieldset {
+    border: 0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 18px 0 20px;
+    margin: 0;
+}
+
+.quiz-form legend {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.option {
+    display: block;
+    padding: 7px 0;
+    cursor: pointer;
+}
+
+.code-workspace {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #333;
+    min-height: 440px;
+    margin-top: 28px;
+}
+
+.editor-panel {
+    background: #1f2024;
+    color: #eee;
+}
+
+.editor-header {
+    background: #111;
+    padding: 10px 14px;
+    font-weight: 700;
+    color: #ffd600;
+}
+
+.editor-panel textarea {
+    min-height: 390px;
+    border: 0;
+    border-radius: 0;
+    margin: 0;
+    resize: vertical;
+    background: #1f2024;
+    color: #f2f2f2;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 16px;
+}
+
+.output-panel {
+    background: #fff;
+    padding: 28px;
+    border-left: 1px solid #333;
+}
+
+.output-panel h2 {
+    text-align: center;
+    color: #111;
+    font-family: Georgia, serif;
+}
+
+.assessment-list {
+    margin: 18px 0;
+    padding: 0;
+    list-style: none;
+}
+
+.assessment-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    margin-top: 4px;
+    font: inherit;
+}
+
+label {
+    font-weight: 600;
+}
+
+.errorlist {
+    color: #b00020;
+}
+
+.references-list li {
+    margin-bottom: 12px;
+}
+
+.vl-footer {
+    background: #121212;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    padding: 24px 6%;
+}
+
+.footer-column h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.footer-line {
+    border-top: 2px solid #555;
+    margin: 10px 0 14px;
+}
+
+.footer-column a,
+.footer-column p {
+    display: block;
+    color: #eee;
+    margin: 4px 0;
+    font-size: 15px;
+}
+
+.social-row {
+    display: flex;
+    gap: 15px;
+}
+
+.social-row span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #2d8fd3;
+    font-weight: 700;
+}
+
+.copyright-bar {
+    text-align: center;
+    padding: 10px;
+    background: #242424;
+    color: #1e8cff;
+    font-weight: 600;
+}
+
+@media (max-width: 1000px) {
+    .vl-header-right {
+        gap: 25px;
+        margin-right: 20px;
+    }
+
+    .top-nav {
+        gap: 25px;
+    }
+
+    .vl-layout {
+        grid-template-columns: 225px minmax(0, 1fr);
+    }
+
+    .vl-content {
+        padding: 12px 28px 45px;
+    }
+}
+
+@media (max-width: 760px) {
+    .vl-header {
+        flex-wrap: wrap;
+    }
+
+    .vl-header-right {
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 20px 15px;
+        margin: 0;
+    }
+
+    .top-nav {
+        gap: 15px;
+    }
+
+    .course-heading,
+    .breadcrumb {
+        font-size: 21px;
+        padding: 18px;
+    }
+
+    .vl-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .vl-sidebar {
+        border-right: 0;
+        border-bottom: 1px solid #ddd;
+        padding: 14px 22px;
+    }
+
+    .vl-content {
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: 32px;
+    }
+
+    .code-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .output-panel {
+        border-left: 0;
+        border-top: 1px solid #333;
+    }
+
+    .vl-footer {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}

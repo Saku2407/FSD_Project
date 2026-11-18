@@ -1,0 +1,30 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}List of Experiments — Django Virtual Lab{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">List of Experiments</h1>
+
+<div class="cards">
+
+{% for slug, exp in experiments.items %}
+    <article class="card">
+        <span class="badge">Experiment {{ forloop.counter }}</span>
+
+        <h3>{{ exp.short_title }}</h3>
+
+        <p>{{ exp.aim }}</p>
+
+        <p><strong>Estimated Time:</strong> {{ exp.time }}</p>
+
+        <a class="button"
+           href="{% url 'register_inout:experiment' slug %}">
+           View Experiment
+        </a>
+    </article>
+{% endfor %}
+
+</div>
+
+{% endblock %}

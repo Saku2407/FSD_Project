@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django Virtual Lab{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'register_inout/css/style.css' %}">
+</head>
+
+<body>
+
+<header class="vl-header">
+
+    <div class="menu-box" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <a class="vl-brand" href="{% url 'register_inout:home' %}">
+        <div class="vl-logo">
+            <div class="logo-flask">⚗</div>
+            <div class="logo-text">
+                <strong>Virtual</strong>
+                <strong>Labs</strong>
+                <small>An Academic Learning Initiative</small>
+            </div>
+        </div>
+    </a>
+
+    <div class="vl-header-right">
+        <div class="rating" aria-label="Lab rating">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span class="empty-star">☆</span>
+        </div>
+
+        <nav class="top-nav">
+            <a href="{% url 'register_inout:home' %}">HOME</a>
+            <a href="{% url 'register_inout:home' %}#partners">PARTNERS</a>
+            <a href="{% url 'register_inout:feedback' %}">CONTACT</a>
+        </nav>
+    </div>
+</header>
+
+<div class="orange-bar"></div>
+
+{% if slug %}
+    <div class="breadcrumb">
+        <a href="{% url 'register_inout:home' %}">Computer Science and Engineering</a>
+        <span>›</span>
+        <a href="{% url 'register_inout:experiments' %}">Django Virtual Lab</a>
+        <span>›</span>
+        <span>Experiments</span>
+    </div>
+{% else %}
+    <div class="course-heading">Computer Science and Engineering</div>
+{% endif %}
+
+<div class="vl-layout">
+
+    <aside class="vl-sidebar">
+
+        {% if slug %}
+
+            <a class="{% if active == 'aim' %}active{% endif %}"
+               href="{% url 'register_inout:experiment_section' slug 'aim' %}">Aim</a>
+
+            <a class="{% if active == 'overview' %}active{% endif %}"
+               href="{% url 'register_inout:experiment_section' slug 'overview' %}">Overview</a>
+
+            <a class="{% if active == 'recap' %}active{% endif %}"
+               href="{% url 'register_inout:experiment_section' slug 'recap' %}">Recap</a>
+
+            <a class="{% if active == 'pretest' %}active{% endif %}"
+               href="{% url 'register_inout:pretest' slug %}?difficulty=beginner">Pretest</a>
+
+            <details class="side-group" {% if active == 'real' %}open{% endif %}>
+                <summary>Real Experiment <span>⌄</span></summary>
+                <a class="sub-link {% if active == 'real' %}active{% endif %}"
+                   href="{% url 'register_inout:experiment_section' slug 'real' %}">Experiment</a>
+            </details>
+
+            <details class="side-group" {% if active == 'assignment' %}open{% endif %}>
+                <summary>Code Assessment <span>⌄</span></summary>
+                <a class="sub-link {% if active == 'assignment' %}active{% endif %}"
+                   href="{% url 'register_inout:assignment' slug %}">Code Assignment</a>
+            </details>
+
+            <details class="side-group" {% if active == 'analysis' %}open{% endif %}>
+                <summary>Analysis <span>⌄</span></summary>
+                <a class="sub-link {% if active == 'analysis' %}active{% endif %}"
+                   href="{% url 'register_inout:experiment_section' slug 'analysis' %}">Analysis</a>
+            </details>
+
+            <a class="{% if active == 'posttest' %}active{% endif %}"
+               href="{% url 'register_inout:posttest' slug %}?difficulty=beginner">Posttest</a>
+
+            <a class="{% if active == 'references' %}active{% endif %}"
+               href="{% url 'register_inout:experiment_section' slug 'references' %}">Further Readings/References</a>
+
+            <a href="{% url 'register_inout:feedback' %}">Feedback</a>
+
+            <div class="back-link">
+                <a href="javascript:history.back()">‹ Back</a>
+            </div>
+
+        {% else %}
+
+            <a class="{% if active == 'introduction' %}active{% endif %}"
+               href="{% url 'register_inout:home' %}">Introduction</a>
+
+            <a class="{% if active == 'objectives' %}active{% endif %}"
+               href="{% url 'register_inout:objectives' %}">Objective</a>
+
+            <a class="{% if active == 'experiments' %}active{% endif %}"
+               href="{% url 'register_inout:experiments' %}">List of experiments</a>
+
+            <a class="{% if active == 'audience' %}active{% endif %}"
+               href="{% url 'register_inout:audience' %}">Target Audience</a>
+
+            <a class="{% if active == 'alignment' %}active{% endif %}"
+               href="{% url 'register_inout:alignment' %}">Course Alignment</a>
+
+            <a href="{% url 'register_inout:feedback' %}">Feedback</a>
+
+        {% endif %}
+
+    </aside>
+
+    <main class="vl-content">
+        {% block content %}{% endblock %}
+    </main>
+</div>
+
+<footer class="vl-footer" id="partners">
+    <div class="footer-column">
+        <h4>Community Links</h4>
+        <div class="footer-line"></div>
+        <a href="#">Learning Portal</a>
+        <a href="#">Student Resources</a>
+        <a href="#">FAQ: Virtual Lab</a>
+    </div>
+
+    <div class="footer-column">
+        <h4>Contact Us</h4>
+        <div class="footer-line"></div>
+        <p>Phone: General Information</p>
+        <p>Email: support@virtual-lab.local</p>
+    </div>
+
+    <div class="footer-column">
+        <h4>Follow Us</h4>
+        <div class="footer-line"></div>
+        <div class="social-row">
+            <span>𝕏</span>
+            <span>f</span>
+            <span>▶</span>
+            <span>in</span>
+        </div>
+    </div>
+</footer>
+
+<div class="copyright-bar">
+    Django Virtual Lab &nbsp; • &nbsp; Academic Project
+</div>
+
+<script src="{% static 'register_inout/js/lab.js' %}"></script>
+</body>
+</html>

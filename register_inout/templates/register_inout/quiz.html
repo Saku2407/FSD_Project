@@ -1,0 +1,51 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}{{ test_type|title }} — {{ experiment.short_title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ experiment.short_title }}</h1>
+
+<h3>{{ test_type|title }}</h3>
+
+<form method="get" class="difficulty">
+    <label>
+        <input type="radio" name="difficulty" value="beginner"
+               {% if difficulty == "beginner" %}checked{% endif %}
+               onchange="this.form.submit()">
+        Beginner
+    </label>
+
+    <label>
+        <input type="radio" name="difficulty" value="advanced"
+               {% if difficulty == "advanced" %}checked{% endif %}
+               onchange="this.form.submit()">
+        Advanced
+    </label>
+</form>
+
+<form method="post" class="quiz-form">
+    {% csrf_token %}
+
+    <input type="hidden" name="difficulty" value="{{ difficulty }}">
+
+    {% for question in questions %}
+        <fieldset>
+            <legend>{{ forloop.counter }}. {{ question.q }}</legend>
+
+            {% for option in question.options %}
+                <label class="option">
+                    <input type="radio"
+                           name="q{{ question.id }}"
+                           value="{{ option }}"
+                           required>
+                    {{ option }}
+                </label>
+            {% endfor %}
+        </fieldset>
+    {% endfor %}
+
+    <button class="button" type="submit">Submit Test</button>
+</form>
+
+{% endblock %}

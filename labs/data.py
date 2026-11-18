@@ -52,6 +52,7 @@ LABS = [
             "Sessions and cookies",
             "Login-required views",
         ],
+        "launch_url": "/accounts/",
     },
     {
         "slug": "permissions-and-groups",

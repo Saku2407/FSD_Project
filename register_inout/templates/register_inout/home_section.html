@@ -1,0 +1,75 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}{{ section_title }} — Django Virtual Lab{% endblock %}
+
+{% block content %}
+
+<h2>{{ section_title }}</h2>
+
+<hr>
+
+{% if active == "objectives" %}
+
+<p>After completing this Virtual Lab, a student should be able to:</p>
+
+<ul>
+
+    <li>Explain authentication and authorization.</li>
+
+    <li>Use Django's built-in User model.</li>
+
+    <li>Build and validate a registration form.</li>
+
+    <li>Understand password hashing and password validation.</li>
+
+    <li>Authenticate users with <code>authenticate()</code>.</li>
+
+    <li>Create and end sessions using <code>login()</code> and <code>logout()</code>.</li>
+
+    <li>Use <code>request.user</code> and <code>@login_required</code>.</li>
+
+    <li>Understand CSRF protection for POST forms.</li>
+
+    <li>Store quiz attempts and feedback in SQLite.</li>
+
+    <li>Inspect application data through Django Admin.</li>
+
+</ul>
+
+{% elif active == "audience" %}
+
+<p>This lab is designed for MTech/BTech students studying Python, Django, Web Development or Web Application Security.</p>
+
+<p>It assumes basic Python and HTML knowledge but explains the Django-specific steps from the beginning.</p>
+
+{% elif active == "alignment" %}
+
+<p>The lab aligns with common Web Development and Python/Django curriculum topics:</p>
+
+<ul>
+
+    <li>Client–server request/response cycle</li>
+
+    <li>Django project and application structure</li>
+
+    <li>URL routing, views and templates</li>
+
+    <li>Forms and validation</li>
+
+    <li>ORM and SQLite database operations</li>
+
+    <li>Authentication, sessions and authorization</li>
+
+    <li>CSRF and secure password handling</li>
+
+    <li>Testing and administration</li>
+
+</ul>
+
+{% else %}
+
+<p>{{ section_text }}</p>
+
+{% endif %}
+
+{% endblock %}

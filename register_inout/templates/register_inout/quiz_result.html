@@ -1,0 +1,36 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}Test Result — {{ experiment.short_title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ experiment.short_title }}</h1>
+
+<h3>{{ test_type|title }} Result</h3>
+
+<div class="score-box">
+    <strong>Score: {{ score }} / {{ total }}</strong>
+</div>
+
+{% for item in result_items %}
+    <div class="concept">
+        <p><strong>{{ forloop.counter }}. {{ item.question.q }}</strong></p>
+        <p>Your answer:
+            <strong>{{ item.selected|default:"Not answered" }}</strong>
+        </p>
+        <p>Correct answer:
+            <strong>{{ item.question.answer }}</strong>
+        </p>
+        <p>{{ item.question.explanation }}</p>
+    </div>
+{% endfor %}
+
+<a class="button" href="{% url 'register_inout:experiment_section' slug 'posttest' %}">
+    Back to experiment
+</a>
+
+<a class="button" href="{% url 'register_inout:pretest' slug %}?difficulty={{ difficulty }}">
+    Try Again
+</a>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "register_inout/base.html" %}
+
+{% block title %}Code Assessment — {{ experiment.short_title }}{% endblock %}
+
+{% block content %}
+
+<h1 class="page-title">{{ experiment.short_title }}</h1>
+
+<h3>Code Assessment</h3>
+
+<p>{{ experiment.assignment }}</p>
+
+<div class="info-box">
+    <strong>Instructions:</strong>
+    Write your solution in the editor and submit it. The assessment checks the
+    required Django concepts; it does not execute arbitrary student code.
+</div>
+
+<form method="post">
+    {% csrf_token %}
+
+    <div class="code-workspace">
+
+        <div class="editor-panel">
+            <div class="editor-header">PYTHON</div>
+            {{ form.code }}
+        </div>
+
+        <div class="output-panel">
+            <h2>Output</h2>
+
+            {% if assessment %}
+                <p><strong>Score:</strong>
+                   {{ assessment.score }}/{{ assessment.total }}</p>
+
+                <ul class="assessment-list">
+                    {% for item in assessment.items %}
+                        <li>
+                            {% if item.passed %}✓{% else %}✗{% endif %}
+                            {{ item.label }}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <p><strong>Result:</strong> {{ assessment.message }}</p>
+            {% else %}
+                <p>Code assessment output will appear here after submission.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <p>
+        <label for="{{ form.student_name.id_for_label }}">Student Name</label>
+        {{ form.student_name }}
+    </p>
+
+    {% if form.errors %}
+        {{ form.errors }}
+    {% endif %}
+
+    <button class="button" type="submit">Submit</button>
+</form>
+
+{% endblock %}
