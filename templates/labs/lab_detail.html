@@ -14,6 +14,10 @@
   <h3>Syllabus Mapping</h3>
   <ul>{% for item in lab.syllabus %}<li>{{ item }}</li>{% endfor %}</ul>
 
+  {% if lab.launch_url %}
+  <p><a class="btn" href="{{ lab.launch_url }}">Open lab</a></p>
+  {% endif %}
+
   <p><a class="btn" href="{% url 'labs:home' %}">Back to all labs</a></p>
 </article>
 {% endblock %}

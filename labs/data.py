@@ -66,6 +66,7 @@ LABS = [
             "Groups and role design",
             "permission_required and has_perm",
         ],
+        "launch_url": "/permissions/",
     },
     {
         "slug": "views-to-templates",
