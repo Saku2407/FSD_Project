@@ -1,0 +1,23 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">THEORY · VIEWS</span><h1>What is a Django View?</h1><p>A Django view is Python code that receives a request and returns an HTTP response. It prepares the context data that an HTML template will display.</p></div>
+<section class="panel"><h2>Simple example</h2><div class="code-head"><span>views.py</span><button data-copy-target="view-example" type="button">Copy</button></div>
+<pre class="code-block" id="view-example"><code>from django.shortcuts import render
+
+def student_view(request):
+    context = {
+        "name": "Yash Kapadiya",
+        "course": "Django",
+        "marks": 82,
+    }
+    return render(request, "student.html", context)</code></pre>
+<p>The dictionary keys <code>name</code>, <code>course</code>, and <code>marks</code> become available to <code>student.html</code>.</p></section>
+<section class="panel"><h2>Connect the URL to the view</h2><div class="code-head"><span>urls.py</span></div><pre class="code-block"><code>from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("student/", views.student_view, name="student"),
+]</code></pre><p>Visiting <code>/student/</code> calls <code>student_view()</code>, which sends the template-rendered response to the browser.</p></section>
+<div class="flow-diagram"><div><small>01</small><strong>URL</strong><span>/student/</span></div><b>→</b><div><small>02</small><strong>View</strong><span>student_view()</span></div><b>→</b><div><small>03</small><strong>Context</strong><span>Python dictionary</span></div><b>→</b><div><small>04</small><strong>Template</strong><span>student.html</span></div></div>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:overview' %}">← Overview</a><a class="btn btn-primary" href="{% url 'views_template:pretest' %}">Next: Pretest →</a></div>
+{% endblock %}

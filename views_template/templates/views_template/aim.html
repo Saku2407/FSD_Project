@@ -1,0 +1,18 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<h3>Estimated Time</h3><p>1 hour</p>
+<h3>Learning Objectives of the Experiment</h3>
+<p>After completing the experiment “Passing Data from Views to Templates” in Django, students will be able to:</p>
+<ul>
+<li>Understand Django's MVT architecture and the roles of views and templates in handling web requests and responses.</li>
+<li>Pass data from a view to a template using Django's context dictionary.</li>
+<li>Create and use dynamic templates to display data received from views.</li>
+<li>Use Django Template Language (DTL) to access variables and display dynamic content.</li>
+<li>Apply template tags and filters such as <code>if</code>, <code>for</code>, and <code>upper</code> to present data.</li>
+<li>Map URLs to views so that the appropriate template is rendered when a user visits a URL.</li>
+<li>Differentiate between static and dynamic content in Django web applications.</li>
+<li>Develop a practical Django application showing the data flow from View → Template → Web Page.</li>
+</ul>
+<div class="notice"><strong>Aim</strong><p>To implement and observe how a Django view creates Python data, places it in a context dictionary, and sends it to an HTML template using <code>render()</code>.</p></div>
+<div class="bottom-actions"><a class="btn btn-primary" href="{% url 'views_template:overview' %}">Next: Overview →</a><a class="btn btn-secondary" href="{% url 'views_template:simulation' %}">Open Experiment →</a></div>
+{% endblock %}

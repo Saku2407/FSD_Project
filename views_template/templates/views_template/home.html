@@ -1,0 +1,25 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<section class="hero">
+  <div class="hero-text">
+    <span class="eyebrow"><span class="eyebrow-dot"></span> VIRTUAL EXPERIMENT · WEB TECHNOLOGIES</span>
+    <h1>Bring your data<br><em>to life.</em></h1>
+    <p>Discover how Django transfers Python data from <strong>views</strong> into interactive <strong>HTML templates</strong>, one experiment at a time.</p>
+    <div class="hero-actions"><a class="btn btn-white" href="{% url 'views_template:aim' %}">Start experiment <span>↗</span></a><a class="btn btn-outline-light" href="{% url 'views_template:simulation' %}">Try simulation →</a></div>
+  </div>
+  <div class="hero-graphic" aria-hidden="true">
+    <div class="mini-editor"><div class="editor-top"><span></span><span></span><span></span><i>views.py</i></div><div class="editor-code"><p><b>def</b> student_view(request):</p><p class="indent">context = {</p><p class="indent2">"name": <strong>"Yash Kapadiya"</strong>,</p><p class="indent2">"marks": <strong>82</strong></p><p class="indent">}</p><p class="indent"><b>return</b> render(</p><p class="indent2">request, "page.html",</p><p class="indent2">context)</p></div></div>
+    <div class="floating-result"><span>● &nbsp; template.html</span><strong>Hello, Yash! 👋</strong><small>Your score: 82 / 100</small></div>
+  </div>
+</section>
+<section class="stats-row"><div><strong>08</strong><span>Learning modules</span></div><div><strong>01</strong><span>Hands-on simulator</span></div><div><strong>12</strong><span>Self-assessment questions</span></div><div><strong>100%</strong><span>Browser-based learning</span></div></section>
+<div class="section-label">YOUR LEARNING JOURNEY</div>
+<h2 class="section-title">Understand. Experiment. Master.</h2>
+<p class="muted intro-copy">Move from the fundamental concepts to real server-rendered output. Every section builds on the previous one.</p>
+<div class="feature-grid">
+  <a class="feature" href="{% url 'views_template:overview' %}"><span class="feature-icon blue">{ }</span><small>MODULE 02</small><h3>Learn the theory</h3><p>Explore views, context dictionaries, templates, loops, conditions and filters.</p><span class="feature-arrow">Explore →</span></a>
+  <a class="feature" href="{% url 'views_template:simulation' %}"><span class="feature-icon teal">▶</span><small>MODULE 05</small><h3>Run the simulation</h3><p>Enter student data, submit it to Django, and inspect the rendered output.</p><span class="feature-arrow">Launch →</span></a>
+  <a class="feature" href="{% url 'views_template:posttest' %}"><span class="feature-icon purple">✓</span><small>MODULE 07</small><h3>Check your learning</h3><p>Take the posttest, view your score, and study explanations for each question.</p><span class="feature-arrow">Take quiz →</span></a>
+</div>
+<div class="notice"><strong>About this project</strong><p>This is an original classroom demonstration inspired by the section-based format of Virtual Labs. It is not an official IIIT Hyderabad or Government of India Virtual Labs website.</p></div>
+{% endblock %}

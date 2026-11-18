@@ -1,0 +1,15 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">DJANGO TEMPLATE LANGUAGE</span><h1>Template Tags</h1><p>Template tags control how HTML is produced. The most common tags for this experiment are <code>if</code> and <code>for</code>.</p></div>
+<div class="two-col"><section class="panel"><h2>Conditional display: if</h2><p>Show a message according to the value of <code>marks</code> passed by the view.</p>{% verbatim %}<pre class="code-block"><code>{% if result.marks >= 40 %}
+  &lt;p&gt;PASS&lt;/p&gt;
+{% else %}
+  &lt;p&gt;FAIL&lt;/p&gt;
+{% endif %}</code></pre>{% endverbatim %}</section><section class="panel"><h2>Displaying a list: for</h2><p>Each skill in the context list becomes an HTML list item.</p>{% verbatim %}<pre class="code-block"><code>&lt;ul&gt;
+{% for skill in result.skills %}
+  &lt;li&gt;{{ skill }}&lt;/li&gt;
+{% endfor %}
+&lt;/ul&gt;</code></pre>{% endverbatim %}</section></div>
+<div class="notice"><strong>Try it yourself</strong><p>Open the Simulation, enter marks below 40 and list several skills. Observe the condition and loop in action.</p></div>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:simulation' %}">← Simulation</a><a class="btn btn-primary" href="{% url 'views_template:template_filters' %}">Next: Template Filters →</a></div>
+{% endblock %}

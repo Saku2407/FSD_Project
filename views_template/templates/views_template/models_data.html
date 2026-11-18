@@ -1,0 +1,18 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">DJANGO ORM · SQLITE</span><h1>Data from Models to Templates</h1><p>This section demonstrates a second type of context value: real Django model records retrieved from SQLite.</p></div>
+<div class="flow-diagram"><div><small>01</small><strong>Database</strong><span>SQLite</span></div><b>→</b><div><small>02</small><strong>Model</strong><span>StudentRecord</span></div><b>→</b><div><small>03</small><strong>View</strong><span>Queryset in context</span></div><b>→</b><div><small>04</small><strong>Template</strong><span>Table of rows</span></div></div>
+<section class="panel"><h2>Step 1: Query the model in a view</h2><div class="code-head"><span>models_data() · views.py (simplified)</span></div><pre class="code-block"><code>records = StudentRecord.objects.order_by('-created_at')[:8]
+context = {'records': records}
+return render(request, 'views_template/models_data.html', context)</code></pre><p>The actual project filters records to the current browser session, so each student sees only their own demonstration entries.</p></section>
+<section class="panel"><h2>Step 2: Display the records in the template</h2>{% verbatim %}<pre class="code-block"><code>{% for student in records %}
+  &lt;tr&gt;
+    &lt;td&gt;{{ student.name }}&lt;/td&gt;
+    &lt;td&gt;{{ student.marks }}&lt;/td&gt;
+  &lt;/tr&gt;
+{% empty %}
+  &lt;p&gt;No records yet.&lt;/p&gt;
+{% endfor %}</code></pre>{% endverbatim %}</section>
+<section class="panel"><h2>Your saved simulation records</h2>{% if records %}<div class="table-wrap"><table class="lab-table"><thead><tr><th>Student</th><th>Course</th><th>Marks</th><th>Result</th></tr></thead><tbody>{% for student in records %}<tr><td>{{ student.name }}</td><td>{{ student.course }}</td><td>{{ student.marks }}</td><td><span class="status {% if student.status == 'PASS' %}pass{% else %}fail{% endif %}">{{ student.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<p>No data yet. Run the <a href="{% url 'views_template:simulation' %}">Simulation</a> first to insert a record into the model.</p>{% endif %}</section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:template_filters' %}">← Filters</a><a class="btn btn-primary" href="{% url 'views_template:get_post' %}">Next: GET &amp; POST →</a></div>
+{% endblock %}

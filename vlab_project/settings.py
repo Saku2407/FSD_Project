@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     "labs",
     "permission_groups",
     "model_migrations",
+    "views_template",
 ]
 
 MIDDLEWARE = [

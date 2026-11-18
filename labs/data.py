@@ -83,6 +83,7 @@ LABS = [
             "Template tags and filters",
             "Template inheritance",
         ],
+        "launch_url": "/data/",
     },
     {
         "slug": "custom-form-validation-clean",

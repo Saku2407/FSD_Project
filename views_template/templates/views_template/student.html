@@ -1,0 +1,76 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Details</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .student-card {
+            background-color: white;
+            padding: 35px;
+            border-radius: 12px;
+            width: 350px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #2563eb;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .student-info {
+            background-color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .student-info strong {
+            color: #334155;
+        }
+
+        .student-info span {
+            color: #475569;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="student-card">
+        <h1>Student Information</h1>
+
+        <div class="student-info">
+            <strong>Name:</strong>
+            <span>{{ name }}</span>
+        </div>
+
+        <div class="student-info">
+            <strong>Age:</strong>
+            <span>{{ age }}</span>
+        </div>
+
+        <div class="student-info">
+            <strong>Course:</strong>
+            <span>{{ course }}</span>
+        </div>
+
+        <div class="student-info">
+            <strong>Marks:</strong>
+            <span>{{ marks }}</span>
+        </div>
+    </div>
+</body>
+</html>

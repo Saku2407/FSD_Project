@@ -1,0 +1,15 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">DJANGO TEMPLATE LANGUAGE</span><h1>Template Filters</h1><p>Filters change the representation of context values when a template displays them.</p></div>
+<section class="panel"><h2>Commonly used filters</h2><div class="table-wrap"><table class="lab-table"><thead><tr><th>Filter</th><th>Example</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>upper</code></td><td><code>name|upper</code></td><td>Display uppercase text</td></tr>
+<tr><td><code>lower</code></td><td><code>name|lower</code></td><td>Display lowercase text</td></tr>
+<tr><td><code>title</code></td><td><code>name|title</code></td><td>Capitalize each word</td></tr>
+<tr><td><code>length</code></td><td><code>skills|length</code></td><td>Count items in a list or characters in text</td></tr>
+<tr><td><code>default</code></td><td><code>nickname|default:"Guest"</code></td><td>Display a fallback for a false or missing value</td></tr>
+</tbody></table></div></section>
+<section class="panel"><h2>Template code</h2>{% verbatim %}<pre class="code-block"><code>&lt;p&gt;{{ result.name|upper }}&lt;/p&gt;
+&lt;p&gt;{{ result.name|title }}&lt;/p&gt;
+&lt;p&gt;Skills: {{ result.skills|length }}&lt;/p&gt;</code></pre>{% endverbatim %}<p>The Simulation uses <code>upper</code>, <code>title</code>, <code>first</code> and <code>length</code> to render formatted values.</p></section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:template_tags' %}">← Template Tags</a><a class="btn btn-primary" href="{% url 'views_template:models_data' %}">Next: Models to Templates →</a></div>
+{% endblock %}

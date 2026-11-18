@@ -1,0 +1,13 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">HTTP METHODS</span><h1>GET &amp; POST Data</h1><p>Compare how a Django view reads input from the URL query string versus the HTTP request body.</p></div>
+<div class="two-col"><section class="panel"><h2>GET example</h2><p>GET parameters appear in the URL and are read with <code>request.GET</code>.</p><form method="get" action="{% url 'views_template:get_post' %}"><div class="field"><label for="get-message">Enter a short message</label><input id="get-message" name="message" maxlength="120" value="Hello from GET" required></div><button class="btn btn-primary" type="submit">Send GET request</button></form></section>
+<section class="panel"><h2>POST example</h2><p>POST sends form data in the request body and is read with <code>request.POST</code>.</p><form method="post" action="{% url 'views_template:get_post' %}">{% csrf_token %}<div class="field"><label for="post-message">Enter a short message</label><input id="post-message" name="message" maxlength="120" value="Hello from POST" required></div><button class="btn btn-primary" type="submit">Send POST request</button></form></section></div>
+{% if method_used %}<section class="panel"><h2>Result rendered by Django</h2><p><strong>Method:</strong> {{ method_used }}</p><p><strong>Context value:</strong> {{ message }}</p><p>The view read the message, inserted it into the context, and rendered it in this template.</p></section>{% endif %}
+<section class="panel"><h2>Example Python code</h2><pre class="code-block"><code>if request.method == "POST":
+    message = request.POST.get("message", "")
+else:
+    message = request.GET.get("message", "")
+return render(request, "get_post.html", {"message": message})</code></pre></section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:models_data' %}">← Models to Templates</a><a class="btn btn-primary" href="{% url 'views_template:analysis' %}">Next: Analysis →</a></div>
+{% endblock %}

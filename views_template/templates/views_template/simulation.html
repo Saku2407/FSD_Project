@@ -1,0 +1,42 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">05 / INTERACTIVE SIMULATION</span><h1>Views → Templates</h1><p>Enter data, send it to the Django backend, and see how the Python context becomes a rendered HTML page.</p></div>
+<div class="simulation-grid"><section class="panel form-panel"><div class="panel-heading"><span class="circle-icon">✎</span><div><h2>Input data</h2><p>Step 1 · Create your sample student</p></div></div>
+<form method="post" action="{% url 'views_template:simulation' %}" id="experiment-form" novalidate>
+{% csrf_token %}
+<div class="field"><label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>{{ form.name }}{% for err in form.name.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<div class="field"><label for="{{ form.course.id_for_label }}">{{ form.course.label }}</label>{{ form.course }}{% for err in form.course.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<div class="field"><label for="{{ form.marks.id_for_label }}">{{ form.marks.label }}</label>{{ form.marks }}{% for err in form.marks.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<div class="field"><label for="{{ form.skills.id_for_label }}">{{ form.skills.label }}</label>{{ form.skills }}<small class="field-hint">{{ form.skills.help_text }}</small>{% for err in form.skills.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+{% for err in form.non_field_errors %}<p class="error">{{ err }}</p>{% endfor %}
+<button type="submit" class="btn btn-primary full">▶ &nbsp; Run experiment</button><p class="input-hint">This submits a real POST request to the Python Django view. It does not execute arbitrary code.</p></form></section>
+<section class="panel output-panel" id="output"><div class="panel-heading"><span class="circle-icon result-icon">↗</span><div><h2>Rendered template</h2><p>Step 2 · See the result from Django</p></div></div>
+{% if result %}
+<div class="success-line"><span class="online-dot"></span> Server rendered successfully</div>
+<div class="student-card"><div class="student-card-head"><span class="avatar">{{ result.name|first|upper }}</span><div><small>STUDENT PROFILE</small><h3>{{ result.name|title }}</h3><p>{{ result.course }}</p></div></div><div class="score-row"><div><small>MARKS</small><strong>{{ result.marks }}<em>/100</em></strong></div><div><small>STATUS</small><span class="status {% if result.status == 'PASS' %}pass{% else %}fail{% endif %}">{{ result.status }}</span></div></div><small class="skills-label">SKILLS · {{ skill_count }} ITEMS</small><div class="skill-tags">{% for skill in result.skills %}<span>{{ skill }}</span>{% endfor %}</div><div class="filter-example">Filter output: <strong>{{ result.name|upper }}</strong> <small>using |upper</small></div></div>
+{% else %}
+<div class="empty-output"><span class="empty-illustration">&lt;/&gt;</span><h3>Your output will appear here</h3><p>Fill in the input form and click <strong>Run experiment</strong> to render the student data using Django templates.</p></div>
+{% endif %}</section></div>
+<div class="explain-banner"><span>↳</span><p><strong>Behind the scenes:</strong> Form submission → <code>views.py</code> validates input → creates <code>student</code> dictionary → <code>render()</code> passes it to the template → HTML displays the result.</p></div>
+<div class="two-col code-pair"><section class="panel"><div class="code-head"><span>BACKEND · VIEWS.PY (SIMPLIFIED)</span></div><pre class="code-block compact"><code># Inside the simulation() view:
+student = {
+    'name': data['name'],
+    'course': data['course'],
+    'marks': data['marks'],
+    'skills': data['skills'],
+    'status': 'PASS' if data['marks'] >= 40 else 'FAIL'
+}
+context['result'] = student
+return render(request, 'views_template/simulation.html', context)</code></pre></section>
+<section class="panel"><div class="code-head"><span>FRONTEND · DJANGO TEMPLATE</span></div>{% verbatim %}<pre class="code-block compact"><code>&lt;h3&gt;{{ result.name }}&lt;/h3&gt;
+&lt;p&gt;{{ result.course }}&lt;/p&gt;
+{% for skill in result.skills %}
+  &lt;span&gt;{{ skill }}&lt;/span&gt;
+{% endfor %}
+{% if result.status == 'PASS' %}
+  &lt;b&gt;PASS&lt;/b&gt;
+{% else %}
+  &lt;b&gt;FAIL&lt;/b&gt;
+{% endif %}</code></pre>{% endverbatim %}</section></div>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:procedure' %}">← Procedure</a><a class="btn btn-primary" href="{% url 'views_template:observations' %}">Next: Observations →</a></div>
+{% endblock %}

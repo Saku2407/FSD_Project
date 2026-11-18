@@ -1,0 +1,38 @@
+{% extends 'views_template/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">02 / BACKGROUND THEORY</span><h1>How data reaches a template</h1><p>Django separates Python processing from HTML presentation. A view prepares the data, and a template displays it.</p></div>
+<section class="panel"><h2>What is a Django view?</h2><p>A view is a Python function (or class) that handles an HTTP request and returns an HTTP response. It can prepare values, read form input, fetch records and choose which template to render.</p></section>
+<div class="flow-diagram"><div><small>01</small><strong>Browser</strong><span>Sends a request</span></div><b>→</b><div><small>02</small><strong>views.py</strong><span>Prepares Python data</span></div><b>→</b><div><small>03</small><strong>Context</strong><span>Dictionary of values</span></div><b>→</b><div><small>04</small><strong>Template</strong><span>Renders HTML</span></div></div>
+<section class="panel"><h2>1. Create data in views.py</h2><p>The view builds a dictionary. Every dictionary key becomes a variable name available inside the template.</p>
+<div class="code-head"><span>PYTHON · views_template/views.py</span><button type="button" data-copy-target="theory-python">Copy code</button></div>
+<pre class="code-block" id="theory-python"><code>from django.shortcuts import render
+
+def example(request):
+    context = {
+        "student_name": "Yash Kapadiya",
+        "marks": 82,
+        "skills": ["Python", "HTML", "Django"],
+        "student": {"city": "Hyderabad"}
+    }
+    return render(request, "example.html", context)</code></pre>
+<p><strong><code>render(request, template_name, context)</code></strong> combines the HTML template with the context data and returns an HTTP response.</p></section>
+<section class="panel"><h2>2. Access data in the template</h2><div class="code-head"><span>HTML · example.html</span><button type="button" data-copy-target="theory-html">Copy code</button></div>
+{% verbatim %}<pre class="code-block" id="theory-html"><code>&lt;h1&gt;Hello {{ student_name }}!&lt;/h1&gt;
+&lt;p&gt;Marks: {{ marks }}&lt;/p&gt;
+&lt;p&gt;City: {{ student.city }}&lt;/p&gt;
+&lt;ul&gt;
+  {% for skill in skills %}
+    &lt;li&gt;{{ skill }}&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;</code></pre>{% endverbatim %}
+<p>Use double curly braces to output a variable, dot notation for dictionary keys, and template tags for logic such as looping through a list.</p></section>
+<div class="two-col"><section class="panel"><h3>Conditional rendering</h3><p>Choose which HTML to display based on a value:</p>{% verbatim %}<pre class="code-block compact"><code>{% if marks >= 40 %}
+  PASS
+{% else %}
+  FAIL
+{% endif %}</code></pre>{% endverbatim %}</section><section class="panel"><h3>Template filters</h3><p>Format values without modifying the Python data:</p>{% verbatim %}<pre class="code-block compact"><code>{{ student_name|upper }}
+{{ skills|length }}
+{{ student_name|title }}</code></pre>{% endverbatim %}</section></div>
+<div class="notice"><strong>Key concept</strong><p>For this experiment, the browser submits data, Django validates it, constructs a context dictionary in the view, and finally renders the page using the values in that context.</p></div>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'views_template:aim' %}">← Previous</a><a class="btn btn-primary" href="{% url 'views_template:views_page' %}">Next: Views →</a></div>
+{% endblock %}
