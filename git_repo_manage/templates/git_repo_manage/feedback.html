@@ -1,0 +1,11 @@
+{% extends 'git_repo_manage/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">STUDENT FEEDBACK</span><h1>Feedback / Report a Bug</h1><p>Use this local form to give feedback about this student-built lab.</p></div>
+{% if submitted %}<div class="notice"><strong>Thank you!</strong><p>Your feedback was stored in this project's local SQLite database, where the Django admin can review it. Nothing was submitted to the official Virtual Labs website.</p></div>{% endif %}
+<section class="panel" style="max-width:680px"><form method="post">{% csrf_token %}
+<div class="field"><label for="{{ form.kind.id_for_label }}">{{ form.kind.label }}</label>{{ form.kind }}{% for err in form.kind.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<div class="field"><label for="{{ form.rating.id_for_label }}">{{ form.rating.label }}</label>{{ form.rating }}{% for err in form.rating.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<div class="field"><label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>{{ form.message }}{% for err in form.message.errors %}<small class="error">{{ err }}</small>{% endfor %}</div>
+<button class="btn btn-primary" type="submit">Submit feedback</button></form></section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'git_repo_manage:home' %}">← Back to Aim</a></div>
+{% endblock %}

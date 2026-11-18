@@ -1,0 +1,27 @@
+{% extends 'git_repo_manage/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">02 / BACKGROUND THEORY</span><h1>Understanding Git Repository Management</h1><p>Git is a distributed version control system. It tracks versions of files so you can experiment, review and collaborate safely.</p></div>
+<section class="panel"><h2>Three areas of a Git project</h2><div class="flow-diagram"><div><small>01</small><strong>Working tree</strong><span>Edit files</span></div><b>→</b><div><small>02</small><strong>Staging area</strong><span>git add</span></div><b>→</b><div><small>03</small><strong>Local repository</strong><span>git commit</span></div></div><p>The working tree contains files on disk. <code>git add</code> stages a snapshot, and <code>git commit</code> saves the staged snapshot as a new commit. Later changes to a staged file require staging again.</p></section>
+<section class="panel"><h2>Core commands</h2><div class="table-wrap"><table class="lab-table"><thead><tr><th>Command</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>git init</code></td><td>Create a repository inside the current Django project directory</td></tr>
+<tr><td><code>git status</code></td><td>Show staged, modified and untracked files</td></tr>
+<tr><td><code>git add README.md</code></td><td>Stage the current contents of README.md</td></tr>
+<tr><td><code>git commit -m "Initial commit"</code></td><td>Create a commit from staged files</td></tr>
+<tr><td><code>git log --oneline</code></td><td>Inspect commit history</td></tr>
+<tr><td><code>git branch feature</code></td><td>Create a new branch at the current commit</td></tr>
+<tr><td><code>git switch feature</code></td><td>Switch to that existing branch</td></tr>
+<tr><td><code>git merge feature</code></td><td>Merge feature into the currently checked-out branch</td></tr>
+<tr><td><code>git remote add origin URL</code></td><td>Configure a remote repository address</td></tr>
+<tr><td><code>git push -u origin main</code></td><td>Publish local commits to a configured remote</td></tr>
+</tbody></table></div></section>
+<section class="panel"><h2>Django project example</h2><div class="code-head"><span>SAMPLE DIRECTORY STRUCTURE</span></div><pre class="code-block"><code>my_django_project/
+├── manage.py
+├── requirements.txt
+├── README.md
+├── config/
+│   └── settings.py
+└── lab/
+    └── views.py</code></pre><p>Commit source code and dependency descriptions; normally exclude <code>.venv/</code>, <code>__pycache__/</code>, secrets, and local development database files using <code>.gitignore</code>.</p></section>
+<section class="panel"><h2>Branches and fast-forward merging</h2><p>A branch is a movable name for a commit. When a feature branch moves ahead of <code>main</code> and <code>main</code> has not changed independently, <code>git merge feature</code> can advance <code>main</code> without creating another merge commit (fast-forward).</p><p><strong>Simulation scope:</strong> This lab models local Git concepts in your browser session. It does not execute Git, clone repositories, run Django code or connect to GitHub. Remote operations and conflict resolution are covered in the references and manual practice notes.</p></section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'git_repo_manage:aim' %}">← Aim</a><a class="btn btn-primary" href="{% url 'git_repo_manage:procedure' %}">Next: Procedure →</a></div>
+{% endblock %}

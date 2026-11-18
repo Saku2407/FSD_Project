@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     "model_migrations",
     "views_template",
     "register_inout",
+    "git_repo_manage",
 ]
 
 MIDDLEWARE = [

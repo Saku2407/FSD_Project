@@ -7,6 +7,7 @@ urlpatterns = [
     path("permissions/", include("permission_groups.urls")),
     path("models/", include("model_migrations.urls")),
     path("data/", include("views_template.urls")),
-    path("accounts/", include("register_inout.urls"))
+    path("accounts/", include("register_inout.urls")),
+    path("gitRepo/", include("git_repo_manage.urls"))
     
 ]

@@ -1,0 +1,18 @@
+{% extends 'git_repo_manage/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">01 / EXPERIMENT OBJECTIVE</span><h1>Aim</h1><p>Learn version control by managing a simulated Git repository for a small Django project.</p></div>
+<h3>Estimated Time</h3><p>60 minutes</p>
+<h3>Learning Objectives of the Experiment</h3>
+<p>After completing the experiment <strong>“Git Repository Management for a Django Project”</strong>, students will be able to:</p>
+<ul>
+<li>Explain repositories, the working directory, staging area (index), commits and HEAD.</li>
+<li>Initialize a local repository with <code>git init</code> and inspect <code>git status</code>.</li>
+<li>Stage selected Django project files using <code>git add</code> and create commits with <code>git commit</code>.</li>
+<li>Understand file changes that occur <em>after</em> staging.</li>
+<li>Create a feature branch, switch between branches and inspect <code>git log</code>.</li>
+<li>Perform a fast-forward merge and distinguish it from a merge requiring conflict handling.</li>
+<li>Apply Git commands to a real Django project after completing the safe simulation.</li>
+</ul>
+<div class="notice"><strong>Aim</strong><p>To simulate Git repository management operations on a Django project and observe how file changes move from the working directory into the staging area and version history.</p></div>
+<div class="bottom-actions"><a class="btn btn-primary" href="{% url 'git_repo_manage:overview' %}">Next: Theory →</a><a class="btn btn-secondary" href="{% url 'git_repo_manage:simulation' %}">Open Simulation →</a></div>
+{% endblock %}

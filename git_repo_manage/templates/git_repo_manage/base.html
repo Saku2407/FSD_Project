@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A student-built Django virtual lab: Git Repository Management for a Django Project.">
+  <title>{{ page_title }} | Git Repository Management for a Django Project</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&family=Raleway:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'git_repo_manage/styles.css' %}">
+  <script src="{% static 'git_repo_manage/main.js' %}" defer></script>
+</head>
+<body class="vlabs-page">
+<header class="vlabs-header">
+  <nav class="navbar" aria-label="Top navigation">
+    <button class="navbar-toggler" type="button" aria-label="Toggle lab sidebar" aria-controls="sidebar" aria-expanded="false" data-menu-toggle>☰</button>
+    <div class="logo-container"><a class="navbar-brand" href="{% url 'git_repo_manage:home' %}">
+      <span class="lab-logo" aria-hidden="true">⚗</span><span class="brand-text"><strong>Virtual<span>Labs</span></strong><small>Git · Django Project</small></span>
+    </a></div>
+    <div class="header-right"><span class="rating" aria-label="Learning by doing">★ ★ ★ ☆ ☆</span>
+      <a class="header-btn" href="{% url 'git_repo_manage:feedback' %}?type=rating">Rate Me</a>
+      <a class="header-btn" href="{% url 'git_repo_manage:feedback' %}?type=bug">Report a Bug</a>
+    </div>
+  </nav>
+</header>
+<div class="breadcrumbs">
+  <a href="{% url 'git_repo_manage:home' %}">Computer Science and Engineering</a><span class="breadcrumb-arrow">›</span>
+  <a href="{% url 'git_repo_manage:home' %}">Git &amp; Version Control Lab</a><span class="breadcrumb-arrow">›</span>
+  <span>Experiments</span>
+</div>
+<div class="main-container">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Virtual lab sections">
+    {% for item in navigation %}
+      <a href="{{ item.href }}" class="{% if active == item.key %}active{% endif %}" {% if active == item.key %}aria-current="page"{% endif %}>{{ item.label }}</a>
+    {% endfor %}
+    </nav>
+    <p class="sidebar-note">Independent student virtual lab based on the experiment-style learning format.</p>
+  </aside>
+  <main class="content" id="main-content">
+    <div class="content-title"><h1>Git Repository Management for a Django Project</h1></div>
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<footer class="footer"><span>Student-built Django Virtual Lab · For academic demonstration</span><span>Not affiliated with IIIT Hyderabad or the official Virtual Labs programme.</span></footer>
+</body>
+</html>

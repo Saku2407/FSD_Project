@@ -1,0 +1,15 @@
+{% extends 'git_repo_manage/base.html' %}
+{% block content %}
+<div class="page-heading"><span class="eyebrow dark">03 / LAB PROCEDURE</span><h1>Procedure</h1><p>Complete a miniature Django repository workflow. Every action updates a practice model in your browser session.</p></div>
+<div class="steps">
+<div class="step"><span>01</span><div><h3>Initialize the repository</h3><p>Open the Simulation and click <strong>git init</strong>.</p></div></div>
+<div class="step"><span>02</span><div><h3>Stage initial Django project files</h3><p>Use <strong>git add</strong> to stage <code>README.md</code>, <code>manage.py</code>, and <code>requirements.txt</code>.</p></div></div>
+<div class="step"><span>03</span><div><h3>Create the first commit</h3><p>Enter <strong>Initial Django project</strong> and click <strong>git commit</strong>. Inspect the commit list.</p></div></div>
+<div class="step"><span>04</span><div><h3>Create and switch to a feature branch</h3><p>Run <code>git branch feature</code> followed by <code>git switch feature</code>.</p></div></div>
+<div class="step"><span>05</span><div><h3>Edit, stage and commit a Django file</h3><p>Choose <code>lab/views.py</code>, enter a sample view, save, stage it and commit with the message <strong>Add home view</strong>.</p></div></div>
+<div class="step"><span>06</span><div><h3>Merge into main</h3><p>Switch to <code>main</code> while the working tree is clean. Run <code>git merge feature</code> to observe the fast-forward.</p></div></div>
+<div class="step"><span>07</span><div><h3>Review results</h3><p>Inspect status, the branches panel, commit history, Observations and the Posttest.</p></div></div>
+</div>
+<section class="panel"><h2>Expected Result</h2><p>The repository is initialized, the first snapshot is committed on <code>main</code>, a new commit is created on <code>feature</code>, and <code>main</code> is advanced to the feature tip by a fast-forward merge. The working tree should be clean.</p></section>
+<div class="bottom-actions"><a class="btn btn-secondary" href="{% url 'git_repo_manage:overview' %}">← Theory</a><a class="btn btn-primary" href="{% url 'git_repo_manage:pretest' %}">Next: Pretest →</a></div>
+{% endblock %}

@@ -21,6 +21,7 @@ LABS = [
             "Branching and merging",
             "Remote repositories",
         ],
+        "launch_url": "/gitRepo/",
     },
     {
         "slug": "models-and-migrations",
