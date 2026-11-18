@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "labs",
     "permission_groups",
+    "model_migrations",
 ]
 
 MIDDLEWARE = [

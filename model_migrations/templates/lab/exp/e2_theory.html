@@ -1,0 +1,60 @@
+<h3>What is a migration?</h3>
+<p>A <strong>migration</strong> is a Python file that describes one change to your database schema: create a table, add a column, rename a field, and so on. Migrations are Django's version control for the database. They live in each app's <code>migrations/</code> folder and are numbered in order: <code>0001_initial.py</code>, <code>0002_book_published.py</code>, ...</p>
+
+<h3>The workflow</h3>
+<div class="flow-static">
+  <span>Edit <code>models.py</code></span><b>&rarr;</b>
+  <span><code>makemigrations</code></span><b>&rarr;</b>
+  <span>New migration file</span><b>&rarr;</b>
+  <span><code>migrate</code></span><b>&rarr;</b>
+  <span>Database updated</span>
+</div>
+<ol class="steps">
+  <li><strong>makemigrations</strong> compares your current models with the state described by the existing migration files. If they differ, it writes a new migration file. <em>It does not touch the database.</em></li>
+  <li><strong>migrate</strong> finds the migrations that have not been applied yet, runs them against the database, and records each one in the <code>django_migrations</code> table.</li>
+</ol>
+
+<h3>Anatomy of a migration file</h3>
+<pre class="code">from django.db import migrations, models
+
+
+class Migration(migrations.Migration):
+
+    initial = True
+
+    dependencies = []
+
+    operations = [
+        migrations.CreateModel(
+            name='Book',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True,
+                                           serialize=False, verbose_name='ID')),
+                ('title', models.CharField(max_length=100)),
+                ('pages', models.IntegerField()),
+            ],
+        ),
+    ]</pre>
+<ul class="bullets">
+  <li><code>dependencies</code>: migrations that must be applied before this one. The first migration has none; later ones list the previous migration, for example <code>('library', '0001_initial')</code>.</li>
+  <li><code>operations</code>: the list of changes, each an object such as <code>CreateModel</code> or <code>AddField</code>. Django converts them to SQL for your particular database.</li>
+</ul>
+
+<h3>Commands you will use</h3>
+<table class="tbl">
+  <tr><th>Command</th><th>What it does</th></tr>
+  <tr><td><code>python manage.py makemigrations [app]</code></td><td>Creates migration files from model changes. Add <code>--dry-run</code> to preview.</td></tr>
+  <tr><td><code>python manage.py migrate [app]</code></td><td>Applies unapplied migrations to the database.</td></tr>
+  <tr><td><code>python manage.py showmigrations [app]</code></td><td>Lists migrations; <code>[X]</code> means applied, <code>[ ]</code> means not yet.</td></tr>
+  <tr><td><code>python manage.py sqlmigrate app 0001</code></td><td>Prints the SQL of a migration without running it.</td></tr>
+</table>
+
+<h3>The django_migrations table</h3>
+<p>Django stores one row per applied migration (the app, the migration name and the time it was applied) in a table named <code>django_migrations</code>. When you run <code>migrate</code>, Django compares the migration files on disk with these rows and runs only what is missing. That is why running <code>migrate</code> twice is safe, and why running <code>makemigrations</code> with no model changes simply says <em>No changes detected</em>.</p>
+
+<h3>Good habits</h3>
+<ul class="bullets">
+  <li>Commit migration files to version control so teammates and servers build the same schema.</li>
+  <li>Do not edit a migration that has already been applied elsewhere. Create a new one instead.</li>
+  <li>Read the generated file (and the output of <code>sqlmigrate</code>) before applying it to important data.</li>
+</ul>

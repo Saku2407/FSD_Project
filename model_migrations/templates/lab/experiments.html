@@ -1,0 +1,16 @@
+{% extends "lab/base.html" %}
+{% block title %}List of experiments{% endblock %}
+{% block content %}
+<h1 class="page-title">List of experiments</h1>
+<div class="text">
+  <ol class="experiments">
+    {% for e in experiments %}
+    <li>
+      <a class="exp-title" href="{% url 'lab:experiment_root' e.num %}">{{ e.title }}</a>
+      <span class="exp-desc">{{ e.desc }}</span>
+      <span class="exp-tags">Theory &middot; {% if e.video %}Animation &middot; {% endif %}Procedure &middot; Simulation &middot; Quiz</span>
+    </li>
+    {% endfor %}
+  </ol>
+</div>
+{% endblock %}

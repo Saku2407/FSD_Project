@@ -1,0 +1,91 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ lab_title }}{% endblock %} | Virtual Lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'lab/style.css' %}">
+  <link rel="stylesheet" href="{% static 'lab/sim.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<header class="topbar">
+  <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </label>
+
+  <a class="logo" href="{% url 'lab:introduction' %}">
+    <span class="logo-flask">&#9879;</span>
+    <span class="logo-text">
+      <span class="logo-virtual">Virtual</span>
+      <span class="logo-labs">Labs</span>
+      <small>A Virtual Learning Initiative</small>
+    </span>
+  </a>
+
+  <nav class="topnav">
+    <span class="stars" title="4 out of 5">&#9733;&#9733;&#9733;&#9733;<span class="empty">&#9734;</span></span>
+    <a href="{% url 'lab:home' %}">HOME</a>
+    <a href="{% url 'lab:partners' %}">PARTNERS</a>
+    <a href="{% url 'lab:contact' %}">CONTACT</a>
+  </nav>
+</header>
+<div class="orange-bar"></div>
+
+<h2 class="department">{{ department }}</h2>
+
+<input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+<div class="layout">
+  <aside class="sidebar">
+    {% if sidebar_heading %}<div class="sidebar-heading">{{ sidebar_heading }}</div>{% endif %}
+    <ul>
+      {% for item in sidebar %}
+      <li>
+        <a href="{{ item.url }}"
+           class="{% if item.active %}active{% endif %}{% if item.back %} back{% endif %}">{{ item.label }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </aside>
+
+  <main class="content">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-cols">
+    <div class="fcol">
+      <h4>Community Links</h4>
+      <div class="rule"></div>
+      <p>Outreach Portal<br>FAQ: Virtual Labs</p>
+    </div>
+    <div class="fcol">
+      <h4>Contact Us</h4>
+      <div class="rule"></div>
+      <p>Phone: General Information: 011-26582050<br>
+         Email: support@vlabs.somaiya.edu</p>
+    </div>
+    <div class="fcol">
+      <h4>Follow Us</h4>
+      <div class="rule"></div>
+      <div class="social">
+        <a class="s twitter" href="#" aria-label="Twitter">t</a>
+        <a class="s facebook" href="#" aria-label="Facebook">f</a>
+        <a class="s youtube" href="#" aria-label="YouTube">&#9654;</a>
+        <a class="s linkedin" href="#" aria-label="LinkedIn">in</a>
+      </div>
+    </div>
+  </div>
+  <div class="licence">
+    <a href="#">AGPL 3.0</a> &amp; <a href="#">Creative Commons (CC BY-NC-SA 4.0)</a>
+  </div>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,103 @@
+{% load static %}
+<p>The <code>library_book</code> table below already holds three rows and <code>0001_initial</code> is applied. Edit the model, create migrations, then move the database forward and backward along the chain. Click any migration in the chain to migrate to that point.</p>
+
+<div class="sim" id="evosim">
+  <section class="sim-card">
+    <h3>Migration chain</h3>
+    <div id="ev-chain" class="chain"></div>
+    <div class="btnrow">
+      <button id="ev-migrate" class="btn" type="button">python manage.py migrate library</button>
+      <button id="ev-reset" class="btn ghost" type="button">Reset</button>
+    </div>
+    <p class="hint">Filled circle = applied to the database. Hollow = migration file exists but is not applied.</p>
+  </section>
+
+  <div class="sim-grid">
+    <section class="sim-card">
+      <h3>1. Change the model</h3>
+      <div class="optabs" role="tablist" id="ev-ops">
+        <button type="button" role="tab" data-op="add" class="on">Add field</button>
+        <button type="button" role="tab" data-op="remove">Remove field</button>
+        <button type="button" role="tab" data-op="rename">Rename field</button>
+        <button type="button" role="tab" data-op="alter">Alter field</button>
+      </div>
+
+      <div class="opform" data-op="add">
+        <label class="fld">Field name <input id="ev-a-name" type="text" placeholder="e.g. rating" autocomplete="off" spellcheck="false"></label>
+        <label class="fld">Type
+          <select id="ev-a-type">
+            <option>IntegerField</option><option>CharField</option><option>TextField</option>
+            <option>FloatField</option><option>BooleanField</option><option>DateField</option><option>EmailField</option>
+          </select>
+        </label>
+        <div class="checks">
+          <label><input id="ev-a-null" type="checkbox"> null=True</label>
+        </div>
+        <label class="fld">default <input id="ev-a-default" type="text" placeholder="none" autocomplete="off"></label>
+        <label class="fld" id="ev-a-boolwrap" hidden>default
+          <select id="ev-a-defbool"><option value="">none</option><option>True</option><option>False</option></select>
+        </label>
+      </div>
+
+      <div class="opform" data-op="remove" hidden>
+        <label class="fld">Field to remove <select id="ev-r-field"></select></label>
+        <p class="hint">Removing a field drops its column and the data in it.</p>
+      </div>
+
+      <div class="opform" data-op="rename" hidden>
+        <label class="fld">Field to rename <select id="ev-n-field"></select></label>
+        <label class="fld">New name <input id="ev-n-new" type="text" autocomplete="off" spellcheck="false"></label>
+        <label class="fld">When Django asks &ldquo;Was it renamed?&rdquo;
+          <select id="ev-n-answer"><option value="y">answer y (keep data)</option><option value="n">answer N (remove + add)</option></select>
+        </label>
+      </div>
+
+      <div class="opform" data-op="alter" hidden>
+        <label class="fld">Field to alter <select id="ev-l-field"></select></label>
+        <label class="fld">New type
+          <select id="ev-l-type">
+            <option>CharField</option><option>TextField</option><option>IntegerField</option>
+            <option>FloatField</option><option>BooleanField</option><option>DateField</option><option>EmailField</option>
+          </select>
+        </label>
+        <label class="fld" id="ev-l-lenwrap">max_length <input id="ev-l-len" type="number" min="1" value="200"></label>
+      </div>
+
+      <button id="ev-make" class="btn" type="button">python manage.py makemigrations library</button>
+      <div id="ev-msg" class="msg" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="sim-card">
+      <h3>2. Database table <code>library_book</code></h3>
+      <div id="ev-table" class="tablewrap"></div>
+      <div id="ev-warn" class="msg" role="status" aria-live="polite"></div>
+      <h4>Model (what models.py says now)</h4>
+      <pre id="ev-model" class="code"></pre>
+    </section>
+  </div>
+
+  <div class="sim-grid">
+    <section class="sim-card">
+      <h3>Migration file</h3>
+      <label class="fld">Show
+        <select id="ev-pick"></select>
+      </label>
+      <pre id="ev-code" class="code"></pre>
+    </section>
+    <section class="sim-card">
+      <h3>Terminal <button id="ev-clear" class="mini" type="button">clear</button></h3>
+      <div id="ev-term" class="term" aria-live="polite"></div>
+    </section>
+  </div>
+</div>
+
+<h3>Try this</h3>
+<ol class="steps">
+  <li>Add <code>published</code> (<code>DateField</code>, <code>null=True</code>), make the migration, then <code>migrate</code>. What do the existing rows hold?</li>
+  <li>Try to add a non-nullable <code>rating</code> with no default. Read the message, then give it a one-off default.</li>
+  <li>Rename <code>pages</code> twice: once answering <em>y</em> and once answering <em>N</em> (use Reset in between). Compare the data and the operations.</li>
+  <li>Remove <code>pages</code>, migrate, then click <code>0001_initial</code> in the chain to roll back. Is the column back? Is the data?</li>
+</ol>
+
+<script src="{% static 'lab/vlab.js' %}"></script>
+<script src="{% static 'lab/sim_evolve.js' %}"></script>

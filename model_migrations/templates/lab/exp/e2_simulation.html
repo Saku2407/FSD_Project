@@ -1,0 +1,67 @@
+{% load static %}
+<p>Press <strong>Run next step</strong> to execute each command. Before you press it, read the prediction box and guess what will change. Then watch the flow diagram, the terminal and the four panels.</p>
+
+<div class="sim" id="migsim">
+  <div class="flow" id="mg-flow" aria-label="Migration workflow">
+    <div class="node" data-n="0"><small>1</small>models.py</div>
+    <div class="arrow">&rarr;<span>makemigrations</span></div>
+    <div class="node" data-n="1"><small>2</small>Migration file</div>
+    <div class="arrow">&rarr;<span>migrate</span></div>
+    <div class="node" data-n="2"><small>3</small>Database</div>
+  </div>
+
+  <div class="sim-grid wide">
+    <section class="sim-card">
+      <div class="stephead">
+        <span id="mg-stepno">Step 1 of 10</span>
+        <span id="mg-status" class="chip"></span>
+      </div>
+      <h3 id="mg-title"></h3>
+      <div class="predict"><strong>Predict:</strong> <span id="mg-before"></span></div>
+      <div id="mg-after-box" class="result" hidden><strong>What happened:</strong> <span id="mg-after"></span></div>
+      <div class="btnrow">
+        <button id="mg-next" class="btn" type="button">Run next step</button>
+        <button id="mg-auto" class="btn ghost" type="button">Auto-play</button>
+        <button id="mg-reset" class="btn ghost" type="button">Reset</button>
+      </div>
+      <ol id="mg-steps" class="steplist"></ol>
+    </section>
+
+    <section class="sim-card">
+      <h3>Terminal</h3>
+      <div id="mg-term" class="term" aria-live="polite"></div>
+    </section>
+  </div>
+
+  <div class="sim-grid four">
+    <section class="sim-card" id="mg-p-models">
+      <h3>models.py</h3>
+      <pre id="mg-models" class="code"></pre>
+    </section>
+    <section class="sim-card" id="mg-p-files">
+      <h3>library/migrations/</h3>
+      <ul id="mg-files" class="filelist"></ul>
+      <pre id="mg-filecode" class="code"></pre>
+    </section>
+    <section class="sim-card" id="mg-p-db">
+      <h3>Database tables</h3>
+      <div id="mg-db"></div>
+    </section>
+    <section class="sim-card" id="mg-p-dm">
+      <h3>django_migrations</h3>
+      <div id="mg-dm"></div>
+      <p class="hint">Built-in apps such as <code>auth</code> and <code>admin</code> also have rows here; they are left out to keep the picture simple.</p>
+    </section>
+  </div>
+</div>
+
+<h3>Try this</h3>
+<ol class="steps">
+  <li>Run steps 1&ndash;2 and look at the Database panel. Is the table there yet? Why not?</li>
+  <li>Run the <code>sqlmigrate</code> step. Which part of the SQL comes from the <code>title</code> field?</li>
+  <li>After <code>migrate</code>, compare the Database panel with the <code>django_migrations</code> panel.</li>
+  <li>When the model gains a new field (step 7), what is out of sync? Which command brings the database back in line, and in which order?</li>
+</ol>
+
+<script src="{% static 'lab/vlab.js' %}"></script>
+<script src="{% static 'lab/sim_migrations.js' %}"></script>

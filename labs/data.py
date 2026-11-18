@@ -36,6 +36,7 @@ LABS = [
             "Migration workflow",
             "Django ORM queries",
         ],
+        "launch_url": "/models/",
     },
     {
         "slug": "registration-login-logout",

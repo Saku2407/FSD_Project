@@ -1,0 +1,58 @@
+<h3>From class to table</h3>
+<p>Django includes an <strong>ORM</strong> (object-relational mapper). You describe your data as a Python class that inherits from <code>django.db.models.Model</code>. Django maps that <em>class</em> to a database <em>table</em>, every <em>attribute</em> to a <em>column</em>, and every <em>instance</em> to a <em>row</em>.</p>
+
+<pre class="code">from django.db import models
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    pages = models.IntegerField()
+    published = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title</pre>
+
+<p>For an app named <code>library</code>, this class is stored in a table called <code>library_book</code>: the app label, an underscore, and the lower-case model name. You can override this with <code>Meta.db_table</code>.</p>
+
+<h3>Primary key</h3>
+<p>If you do not declare a primary key, Django adds an auto-incrementing <code>id</code> column for you. To use a different primary key, set <code>primary_key=True</code> on one field.</p>
+
+<h3>Common field types</h3>
+<table class="tbl">
+  <tr><th>Field</th><th>Use it for</th><th>SQLite column type</th></tr>
+  <tr><td><code>CharField(max_length=n)</code></td><td>Short text such as names and titles</td><td><code>varchar(n)</code></td></tr>
+  <tr><td><code>TextField</code></td><td>Long text</td><td><code>text</code></td></tr>
+  <tr><td><code>IntegerField</code></td><td>Whole numbers</td><td><code>integer</code></td></tr>
+  <tr><td><code>FloatField</code></td><td>Approximate decimals</td><td><code>real</code></td></tr>
+  <tr><td><code>DecimalField</code></td><td>Exact decimals, such as money</td><td><code>decimal</code></td></tr>
+  <tr><td><code>BooleanField</code></td><td>True / False</td><td><code>bool</code></td></tr>
+  <tr><td><code>DateField</code>, <code>DateTimeField</code></td><td>Dates and timestamps</td><td><code>date</code>, <code>datetime</code></td></tr>
+  <tr><td><code>EmailField</code></td><td>Email addresses (validated)</td><td><code>varchar(254)</code></td></tr>
+</table>
+<p>The exact column type depends on the database backend. The table above shows what SQLite uses.</p>
+
+<h3>Field options</h3>
+<table class="tbl">
+  <tr><th>Option</th><th>Meaning</th></tr>
+  <tr><td><code>null=True</code></td><td>The <strong>database</strong> column may store <code>NULL</code>.</td></tr>
+  <tr><td><code>blank=True</code></td><td>Forms and the admin accept an empty value (<strong>validation only</strong>).</td></tr>
+  <tr><td><code>default=...</code></td><td>Value used when none is given. It is applied by Django in Python, not stored as a database default.</td></tr>
+  <tr><td><code>unique=True</code></td><td>No two rows may have the same value (adds a <code>UNIQUE</code> constraint).</td></tr>
+  <tr><td><code>choices=...</code></td><td>Restricts the value to a fixed list.</td></tr>
+  <tr><td><code>auto_now_add=True</code></td><td>Sets a date/time field once, when the row is created.</td></tr>
+</table>
+<p><strong>Convention:</strong> for text fields such as <code>CharField</code>, prefer <code>blank=True</code> and store an empty string rather than <code>null=True</code>. Otherwise "no value" has two representations, <code>NULL</code> and <code>''</code>.</p>
+
+<h3>Relationships</h3>
+<p>A <code>ForeignKey</code> creates a many-to-one relationship: many books can point to one author.</p>
+<pre class="code">class Book(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)</pre>
+<ul class="bullets">
+  <li>The column is named after the field plus <code>_id</code>, so here it is <code>author_id</code>.</li>
+  <li><code>on_delete</code> is required. It decides what happens to the book when its author is deleted: <code>CASCADE</code> deletes the book too, <code>PROTECT</code> refuses the deletion, <code>SET_NULL</code> sets the column to NULL (needs <code>null=True</code>).</li>
+  <li><code>ManyToManyField</code> and <code>OneToOneField</code> cover the other relationship types.</li>
+</ul>
+
+<h3>Meta options and __str__</h3>
+<p>An inner <code>class Meta</code> holds model-level settings such as <code>ordering</code>, <code>db_table</code> and <code>constraints</code>. Defining <code>__str__</code> makes objects readable in the admin and in the shell.</p>
+
+<div class="note"><strong>Important:</strong> writing or changing a model does <em>not</em> touch the database. The database changes only after you create and apply a migration, which is the subject of Experiment 2.</div>

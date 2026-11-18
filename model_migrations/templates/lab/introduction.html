@@ -1,0 +1,27 @@
+{% extends "lab/base.html" %}
+{% block title %}Introduction{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ lab_title }}</h1>
+<div class="text">
+  <p>Welcome to the Creating Django Models and Migrations Lab. Almost every web
+  application needs to store data, and Django lets you describe that data with
+  ordinary Python classes called <strong>models</strong>. Each model becomes a
+  table in the database, and each attribute of the class becomes a column. You
+  never have to write <code>CREATE TABLE</code> by hand.</p>
+
+  <p>Real projects do not stand still, though. Requirements change, so fields
+  get added, renamed and removed after the database already contains data.
+  <strong>Migrations</strong> are Django's answer: a versioned, reviewable
+  history of every change made to your database structure. You change your
+  models, Django writes a migration file describing the change, and a single
+  command applies it to the database.</p>
+
+  <p>Students often find this pipeline invisible: you edit one file, run two
+  commands, and the database changes. This lab makes each stage visible. In
+  three experiments you will design a model and watch the matching table and SQL
+  appear, step through the lifecycle from <code>models.py</code> to the
+  database, and evolve a live table by adding, renaming, altering and removing
+  fields, rolling back when you want to. Each experiment ends with a short quiz
+  to check your understanding.</p>
+</div>
+{% endblock %}

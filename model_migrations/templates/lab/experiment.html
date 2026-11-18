@@ -1,0 +1,51 @@
+{% extends "lab/base.html" %}
+{% load static %}
+{% block title %}Experiment {{ exp.num }}: {{ section_label }}{% endblock %}
+{% block content %}
+<h1 class="page-title">{{ exp.title }}</h1>
+<h2 class="section-title">{{ section_label }}</h2>
+
+<div class="text exp">
+  {% if section == "aim" %}
+    <p>{{ exp.aim|safe }}</p>
+    <p><strong>By the end of this experiment you will be able to:</strong></p>
+    <ul class="bullets">
+      {% for o in exp.objectives %}<li>{{ o|safe }}</li>{% endfor %}
+    </ul>
+  {% elif section == "video" %}
+    {% if video_url %}
+      <video class="lab-video" controls preload="metadata" controlsList="nodownload">
+        <source src="{{ video_url }}" type="video/mp4">
+        Your browser cannot play this video.
+      </video>
+      <p class="hint">Watch the animation first, then try the Simulation.</p>
+    {% else %}
+      <div class="note">The animation video for this experiment has not been added yet.
+      Place the file <code>{{ exp.video }}</code> in <code>lab/static/lab/videos/</code> and reload.</div>
+    {% endif %}
+  {% elif section == "quiz" %}
+    <div id="quiz" class="quiz" data-key="exp{{ exp.num }}"></div>
+    {{ quiz_data|json_script:"quiz-data" }}
+    <noscript><p>The quiz needs JavaScript to run.</p></noscript>
+  {% elif section == "references" %}
+    <ul class="bullets">
+      {% for title, url in exp.references %}
+      <li><a href="{{ url }}" target="_blank" rel="noopener">{{ title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    {% include section_template %}
+  {% endif %}
+</div>
+
+<nav class="pager">
+  {% if prev_url %}<a class="btn ghost" href="{{ prev_url }}">&larr; {{ prev_label }}</a>{% else %}<span></span>{% endif %}
+  {% if next_url %}<a class="btn" href="{{ next_url }}">{{ next_label }} &rarr;</a>{% endif %}
+</nav>
+{% endblock %}
+
+{% block scripts %}
+{% if section == "quiz" %}
+<script src="{% static 'lab/quiz.js' %}"></script>
+{% endif %}
+{% endblock %}

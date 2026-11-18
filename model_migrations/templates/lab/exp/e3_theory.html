@@ -1,0 +1,46 @@
+<h3>Models change over time</h3>
+<p>After the first migration, the database holds real data. Changing the model now means changing a table that already contains rows, so Django records each change as a <em>new</em> migration that depends on the previous one. The migrations form a chain:</p>
+<div class="flow-static">
+  <span><code>0001_initial</code></span><b>&rarr;</b>
+  <span><code>0002_book_published</code></span><b>&rarr;</b>
+  <span><code>0003_...</code></span>
+</div>
+
+<h3>Operations Django generates</h3>
+<table class="tbl">
+  <tr><th>You change...</th><th>Operation</th><th>Effect on the table</th></tr>
+  <tr><td>Add a field</td><td><code>AddField</code></td><td>New column; existing rows get the default (or NULL).</td></tr>
+  <tr><td>Remove a field</td><td><code>RemoveField</code></td><td>Column is dropped. <strong>Its data is lost.</strong></td></tr>
+  <tr><td>Rename a field</td><td><code>RenameField</code></td><td>Column is renamed; data is kept.</td></tr>
+  <tr><td>Change a field's type or options</td><td><code>AlterField</code></td><td>Column definition changes; data is converted if possible.</td></tr>
+  <tr><td>Add / remove / rename a model</td><td><code>CreateModel</code>, <code>DeleteModel</code>, <code>RenameModel</code></td><td>Table is created, dropped or renamed.</td></tr>
+</table>
+<p>Some databases, SQLite included, cannot perform every change with a simple <code>ALTER TABLE</code>. In those cases Django may rebuild the table behind the scenes.</p>
+
+<h3>Adding a field to a table that has rows</h3>
+<p>Existing rows need <em>some</em> value in a new column. If the new field is not nullable and has no default, <code>makemigrations</code> stops and asks you to choose:</p>
+<ol class="steps">
+  <li>give a <strong>one-off default</strong> that is used only to fill the existing rows, or</li>
+  <li>quit and set a permanent <code>default=...</code> (or <code>null=True</code>) in <code>models.py</code>.</li>
+</ol>
+
+<h3>Renames and the "Was it renamed?" prompt</h3>
+<p>Django only sees the old and the new model. If one field disappears and another of the same type appears, it asks: <em>Was book.pages renamed to book.page_count?</em></p>
+<ul class="bullets">
+  <li>Answer <strong>y</strong>: it writes a <code>RenameField</code>, so the data is kept.</li>
+  <li>Answer <strong>N</strong>: it writes <code>RemoveField</code> and <code>AddField</code>, so the old column's data is dropped.</li>
+</ul>
+
+<h3>Going backward</h3>
+<p>Most operations can be reversed (a <code>RunPython</code> step can be too, if you supply a reverse function). Giving <code>migrate</code> a target moves the database to that point, in either direction:</p>
+<pre class="code">python manage.py migrate library 0001     # unapply everything after 0001
+python manage.py migrate library          # apply everything again</pre>
+<p>Reversing a migration does not bring back data that its forward step destroyed. For example, if <code>0003</code> removed the <code>pages</code> column, unapplying it re-creates the column, but it is empty.</p>
+
+<h3>Data migrations and other tools</h3>
+<ul class="bullets">
+  <li><code>RunPython</code> runs your own Python function inside a migration, which is the usual way to copy or transform existing data.</li>
+  <li><code>makemigrations --empty app</code> creates a blank migration for you to fill in.</li>
+  <li>Long chains can be combined with <code>squashmigrations</code>.</li>
+  <li>If two developers create migrations from the same parent, <code>makemigrations --merge</code> can reconcile them.</li>
+</ul>

@@ -1,0 +1,17 @@
+{% extends "lab/base.html" %}
+{% block title %}Objective{% endblock %}
+{% block content %}
+<h1 class="page-title">Objective</h1>
+<div class="text">
+  <p>After completing this lab, the student will be able to:</p>
+  <ul class="bullets">
+    <li>Explain how Django's ORM maps a model class to a database table and its fields to columns.</li>
+    <li>Define models using common field types and options such as <code>null</code>, <code>blank</code>, <code>default</code> and <code>unique</code>.</li>
+    <li>Relate models to each other using <code>ForeignKey</code> and choose a suitable <code>on_delete</code> behaviour.</li>
+    <li>Generate migration files with <code>makemigrations</code> and apply them with <code>migrate</code>.</li>
+    <li>Inspect migrations using <code>showmigrations</code> and <code>sqlmigrate</code>, and read the <code>django_migrations</code> table.</li>
+    <li>Evolve an existing schema by adding, removing, renaming and altering fields.</li>
+    <li>Roll the database back to an earlier migration and explain what data can be lost.</li>
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<p>Start from the <code>library</code> app with <code>0001_initial</code> applied and a few rows saved in <code>Book</code>.</p>
+
+<ol class="steps">
+  <li>
+    <strong>Add a nullable field.</strong> In <code>models.py</code> add
+    <pre class="code">published = models.DateField(null=True)</pre>
+    Run <code>python manage.py makemigrations library</code>. Django creates <code>0002_book_published.py</code> containing an <code>AddField</code>. Run <code>python manage.py migrate</code>. Existing rows now have <code>NULL</code> in <code>published</code>.
+  </li>
+  <li>
+    <strong>Add a required field.</strong> Add
+    <pre class="code">rating = models.IntegerField()</pre>
+    Run <code>makemigrations</code>. Django warns that it cannot add a non-nullable field without a default and offers a one-off default. Choose option 1 and enter <code>0</code>. Apply with <code>migrate</code>.
+  </li>
+  <li>
+    <strong>Rename a field.</strong> Change <code>pages</code> to <code>page_count</code> in the model. When Django asks whether the field was renamed, answer <code>y</code>. Check that the generated file contains a <code>RenameField</code>.
+  </li>
+  <li>
+    <strong>Alter a field.</strong> Change <code>max_length=100</code> to <code>max_length=200</code> on <code>title</code>. You will get an <code>AlterField</code>.
+  </li>
+  <li>
+    <strong>Roll back.</strong> Go back to the first migration:
+    <pre class="code">python manage.py migrate library 0001
+python manage.py showmigrations library</pre>
+    The later migrations show as <code>[ ]</code> again, even though their files (and your models) are unchanged.
+  </li>
+  <li>
+    <strong>Roll forward.</strong> Run <code>python manage.py migrate library</code> to apply them again.
+  </li>
+  <li>
+    <strong>Use the Simulation</strong> to repeat all of this on a live table and to watch what happens to the data, including what a rollback cannot bring back.
+  </li>
+</ol>

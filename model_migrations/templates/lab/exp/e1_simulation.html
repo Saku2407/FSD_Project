@@ -1,0 +1,109 @@
+{% load static %}
+<p>Design a model on the left. The Python code, the table and the SQL on the right update as you type. Assume an <code>Author</code> model already exists in the same app so that you can try a <code>ForeignKey</code>.</p>
+
+<div class="sim" id="modelsim">
+  <div class="sim-grid">
+    <section class="sim-card">
+      <h3>1. Design the model</h3>
+
+      <label class="fld">Model class name
+        <input id="ms-class" type="text" value="Book" autocomplete="off" spellcheck="false">
+      </label>
+
+      <div class="subcard">
+        <h4>Add a field</h4>
+        <label class="fld">Field name
+          <input id="ms-name" type="text" placeholder="e.g. isbn" autocomplete="off" spellcheck="false">
+        </label>
+        <label class="fld">Field type
+          <select id="ms-type">
+            <option>CharField</option>
+            <option>TextField</option>
+            <option>IntegerField</option>
+            <option>FloatField</option>
+            <option>DecimalField</option>
+            <option>BooleanField</option>
+            <option>DateField</option>
+            <option>DateTimeField</option>
+            <option>EmailField</option>
+            <option>ForeignKey</option>
+          </select>
+        </label>
+
+        <div class="row" data-for="CharField">
+          <label class="fld">max_length <input id="ms-maxlen" type="number" min="1" value="100"></label>
+        </div>
+        <div class="row" data-for="DecimalField">
+          <label class="fld">max_digits <input id="ms-digits" type="number" min="1" value="6"></label>
+          <label class="fld">decimal_places <input id="ms-places" type="number" min="0" value="2"></label>
+        </div>
+        <div class="row" data-for="ForeignKey">
+          <label class="fld">Related model <input type="text" value="Author" disabled></label>
+          <label class="fld">on_delete
+            <select id="ms-ondelete">
+              <option>CASCADE</option><option>PROTECT</option><option>SET_NULL</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="checks">
+          <label><input id="ms-null" type="checkbox"> null=True</label>
+          <label><input id="ms-blank" type="checkbox"> blank=True</label>
+          <label data-hide="BooleanField"><input id="ms-unique" type="checkbox"> unique=True</label>
+          <label data-for="DateField DateTimeField"><input id="ms-autonow" type="checkbox"> auto_now_add=True</label>
+        </div>
+
+        <div class="row" data-for="CharField TextField EmailField IntegerField FloatField">
+          <label class="fld">default (optional) <input id="ms-default" type="text" placeholder="none" autocomplete="off"></label>
+        </div>
+        <div class="row" data-for="BooleanField">
+          <label class="fld">default
+            <select id="ms-defbool"><option value="">none</option><option>True</option><option>False</option></select>
+          </label>
+        </div>
+
+        <button id="ms-add" class="btn" type="button">Add field</button>
+        <div id="ms-msg" class="msg" role="status" aria-live="polite"></div>
+      </div>
+
+      <h4>Fields in this model</h4>
+      <ul id="ms-fields" class="fieldlist"></ul>
+
+      <div class="checks">
+        <label><input id="ms-str" type="checkbox" checked> Include a <code>__str__</code> method</label>
+      </div>
+      <div class="btnrow">
+        <button id="ms-example" class="btn ghost" type="button">Load example</button>
+        <button id="ms-reset" class="btn ghost" type="button">Reset</button>
+      </div>
+    </section>
+
+    <div class="sim-col">
+      <section class="sim-card">
+        <h3>2. library/models.py</h3>
+        <pre id="ms-code" class="code"></pre>
+      </section>
+      <section class="sim-card">
+        <h3>3. The table Django will create</h3>
+        <div id="ms-table" class="tablewrap"></div>
+        <p class="hint">Sample rows are made up, to show what each column holds.</p>
+      </section>
+      <section class="sim-card">
+        <h3>4. SQL (SQLite)</h3>
+        <pre id="ms-sql" class="code"></pre>
+        <p class="hint">Django does not put <code>default</code> in the SQL: defaults are applied in Python when you save an object.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<h3>Try this</h3>
+<ol class="steps">
+  <li>Add a <code>CharField</code> called <code>isbn</code> with <code>unique=True</code>. Which part of the SQL changed?</li>
+  <li>Add a <code>ForeignKey</code> called <code>author</code>. What is the column called in the table?</li>
+  <li>Tick <code>null=True</code> on a <code>CharField</code>. Read the hint that appears, then try <code>blank=True</code> instead.</li>
+  <li>Add a <code>DateField</code> with <code>null=True</code>. Compare it with the same field without it, looking at <code>NULL</code> versus <code>NOT NULL</code> in the SQL.</li>
+</ol>
+
+<script src="{% static 'lab/vlab.js' %}"></script>
+<script src="{% static 'lab/sim_model.js' %}"></script>

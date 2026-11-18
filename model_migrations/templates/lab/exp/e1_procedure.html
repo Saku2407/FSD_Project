@@ -1,0 +1,47 @@
+<p>Follow these steps on your own computer, then use the <strong>Simulation</strong> page to experiment with model design interactively.</p>
+
+<ol class="steps">
+  <li>
+    <strong>Create a project and an app.</strong>
+    <pre class="code">django-admin startproject mysite
+cd mysite
+python manage.py startapp library</pre>
+  </li>
+  <li>
+    <strong>Register the app</strong> by adding it to <code>INSTALLED_APPS</code> in <code>mysite/settings.py</code>. Django only looks for models in registered apps.
+    <pre class="code">INSTALLED_APPS = [
+    # ... built-in apps ...
+    "library",
+]</pre>
+  </li>
+  <li>
+    <strong>Define your models</strong> in <code>library/models.py</code>.
+    <pre class="code">from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    pages = models.IntegerField()
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title</pre>
+  </li>
+  <li>
+    <strong>Check for mistakes.</strong>
+    <pre class="code">python manage.py check</pre>
+    You should see <code>System check identified no issues (0 silenced).</code>
+  </li>
+  <li>
+    <strong>Predict the table.</strong> Before moving on, write down the table names, the column names and the type of each column. Then compare your answer with the Model Builder on the <em>Simulation</em> page.
+  </li>
+  <li>
+    <strong>Continue to Experiment 2</strong> to turn these models into real database tables with migrations.
+  </li>
+</ol>

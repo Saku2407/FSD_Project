@@ -1,0 +1,38 @@
+<p>Continue with the <code>library</code> app from Experiment 1. Run each command from the folder that contains <code>manage.py</code>.</p>
+
+<ol class="steps">
+  <li>
+    <strong>Create the first migration.</strong>
+    <pre class="code">python manage.py makemigrations library</pre>
+    Expected output (the exact lines depend on your models):
+    <pre class="code">Migrations for 'library':
+  library/migrations/0001_initial.py
+    + Create model Book</pre>
+    Open <code>library/migrations/0001_initial.py</code> and read it.
+  </li>
+  <li>
+    <strong>See which migrations are applied.</strong>
+    <pre class="code">python manage.py showmigrations library</pre>
+    <code>0001_initial</code> is shown as <code>[ ]</code>: it exists as a file but the database does not have it yet.
+  </li>
+  <li>
+    <strong>Preview the SQL.</strong>
+    <pre class="code">python manage.py sqlmigrate library 0001</pre>
+    You will see a <code>CREATE TABLE "library_book" ...</code> statement. Nothing has run yet.
+  </li>
+  <li>
+    <strong>Apply the migration.</strong>
+    <pre class="code">python manage.py migrate library</pre>
+    <pre class="code">Running migrations:
+  Applying library.0001_initial... OK</pre>
+  </li>
+  <li>
+    <strong>Confirm.</strong> Run <code>showmigrations</code> again. It now shows <code>[X] 0001_initial</code>. You can also open <code>db.sqlite3</code> in a SQLite viewer and look at the <code>library_book</code> and <code>django_migrations</code> tables.
+  </li>
+  <li>
+    <strong>Run makemigrations again</strong> without changing the models. Django reports <code>No changes detected in app 'library'</code>.
+  </li>
+  <li>
+    <strong>Use the Simulation.</strong> Step through the whole lifecycle, including a second migration that adds a field, and watch each of the four panels change.
+  </li>
+</ol>
