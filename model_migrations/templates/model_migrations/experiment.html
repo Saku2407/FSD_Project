@@ -21,7 +21,7 @@
       <p class="hint">Watch the animation first, then try the Simulation.</p>
     {% else %}
       <div class="note">The animation video for this experiment has not been added yet.
-      Place the file <code>{{ exp.video }}</code> in <code>lab/static/lab/videos/</code> and reload.</div>
+      Place the file <code>{{ exp.video }}</code> in <code>model_migrations/static/model_migrations/videos/</code> and reload.</div>
     {% endif %}
   {% elif section == "quiz" %}
     <div id="quiz" class="quiz" data-key="exp{{ exp.num }}"></div>

@@ -41,29 +41,29 @@ def _page(request, template, active, **extra):
 
 
 def introduction(request):
-    return _page(request, "model_migrations/introduction.html", "lab:introduction")
+    return _page(request, "model_migrations/introduction.html", "model_migrations:introduction")
 
 
 def objective(request):
-    return _page(request, "model_migrations/objective.html", "lab:objective")
+    return _page(request, "model_migrations/objective.html", "model_migrations:objective")
 
 
 def experiments(request):
-    return _page(request, "model_migrations/experiments.html", "lab:experiments",
+    return _page(request, "model_migrations/experiments.html", "model_migrations:experiments",
                  experiments=EXPERIMENTS)
 
 
 def audience(request):
-    return _page(request, "model_migrations/audience.html", "lab:audience")
+    return _page(request, "model_migrations/audience.html", "model_migrations:audience")
 
 
 def alignment(request):
-    return _page(request, "model_migrations/alignment.html", "lab:alignment")
+    return _page(request, "model_migrations/alignment.html", "model_migrations:alignment")
 
 
 def feedback(request):
     submitted = request.method == "POST"
-    return _page(request, "model_migrations/feedback.html", "lab:feedback",
+    return _page(request, "model_migrations/feedback.html", "model_migrations:feedback",
                  submitted=submitted)
 
 
