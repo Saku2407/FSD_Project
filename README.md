@@ -2,7 +2,7 @@
 
 A Virtual Labs style landing page built with Django, HTML, CSS and JavaScript.
 
-## Run it
+## How to run it
 
     python -m venv venv
     source venv/bin/activate        # Windows: venv\Scripts\activate
